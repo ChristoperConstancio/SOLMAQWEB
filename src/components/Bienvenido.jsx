@@ -9,7 +9,7 @@ function Bienvenido() {
 
     const interfaz = () => {
       if (tipoUsuario == '1') {
-        setApartments(['Usuarios', 'Ventas', 'RFQs', 'Clientes', 'Cobros', 'Reportes']);
+        setApartments(['Usuarios', 'Ventas', 'RFQ', 'Clientes', 'Cobros', 'Reportes']);
       } 
     }
 

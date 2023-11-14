@@ -5,7 +5,7 @@ export default async function editUser(id) {
         // Obtiene una referencia a la colección
         const db = getFirestore();
         const usersRef = collection(db, 'Usuarios');
-        const q = query(usersRef, where("idUser", "==", id));
+        const q = query(usersRef, where("nombreUsuario", "==", id));
         const querySnapshot = await getDocs(q);
         let data;
         if(querySnapshot.size > 0){ 

@@ -32,6 +32,7 @@ export default async function editingClient(id, data) {
             
           })
         }
+    
         return true;
       } catch (error) {
         return false;

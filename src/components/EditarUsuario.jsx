@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { getFirestore, collection, getDocs, addDoc } from "firebase/firestore";
 import editUser from '../customHooks/editDoc';
-import editingUser from '../customHooks/editingUser';
+import {editingUser} from '../customHooks/editingUser';
 import fetchData from '../customHooks/getRoles';
 import { useNavigate } from 'react-router-dom';
 import { getUserRol } from '../customHooks/getRol';
@@ -15,19 +15,20 @@ export default function EditarUsuario() {
         apellidoMaterno: '',
         status: '',
         rol: '',
-        idUser: ''
+        nombreUsuario: '',
     })
+    const [nameR, setRol] = useState()
     const cancelAction = (e) => {
         e.preventDefault();
         alert("Operacion Cancelada");
         navigate('/Usuarios');
     }
 
-    const upUser = (e) => {
+    const upUser = async (e) => {
         e.preventDefault();
-        const updateUser = editingUser(data.id, data);
-        if (updateUser) alert("Actualizacion Exitosa!")
-        if (!updateUser) alert("Hubo un problema ")
+        const updateUser = await editingUser(data.nombreUsuario, data);
+        alert(updateUser)
+        navigate('/Usuarios')
     }
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -59,18 +60,18 @@ export default function EditarUsuario() {
         };
         const updateUser = async () => {
             const iden = localStorage.getItem('id');
-            const { apellidoPaterno, apellidoMaterno, nombreUsuario, rol, nombre, status, idUser } = await editUser(iden);
-            const { cargo } = await getUserRol(rol);
-
+            const { apellidoPaterno, apellidoMaterno, nombreUsuario, rol, nombre, status } = await editUser(iden);
             setData({
                 nombre,
                 apellidoMaterno,
                 apellidoPaterno,
                 status,
-                rol:cargo,
+                rol,
                 nombreUsuario,
-                idUser
             })
+            const {cargo} = await getUserRol(rol);
+
+            setRol(cargo)
         }
         obtenerDatos();
         updateUser();
@@ -88,7 +89,7 @@ export default function EditarUsuario() {
                             name='nombreUsuario'
                             className='bg-slate-300 w-80 rounded-lg h-10 pl-3 placeholder-black'
                             placeholder={data.nombreUsuario}
-                            onChange={handleInputChange}
+                            readOnly
 
                         />
                     </div>
@@ -135,7 +136,7 @@ export default function EditarUsuario() {
                         <h1 className="text-white text-3xl">Apellido <br /> Materno : </h1>
                         <input type="text"
                             id='materno'
-                            name='materno'
+                            name='apellidoMaterno'
                             className='bg-slate-300 w-80 rounded-lg h-10 pl-3 placeholder-black'
                             placeholder={data.apellidoMaterno}
                             onChange={handleInputChange}
@@ -152,12 +153,12 @@ export default function EditarUsuario() {
                             className="bg-slate-300 rounded-lg w-60 h-10 placeholder-black"
                             onChange={handleChange}
 
-                        >
-                            <option value={data.rol}> {data.rol}</option>
+                        > 
+                            <option value={nameR}> {nameR}</option>
                             {options
-                            .filter(item => item.cargo != data.rol)
+                            .filter(item => item.id != data.rol)
                             .map((item, index) => (
-                                <option key={index} value={item.cargo}>
+                                <option key={index} value={item.id} >
                                     {item.cargo}
                                 </option>
                             ))}

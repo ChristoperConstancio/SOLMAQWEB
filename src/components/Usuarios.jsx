@@ -83,14 +83,13 @@ export default function Usuarios() {
                         status: item.status,
                         apellidoMaterno: item.apellidoMaterno,
                         apellidoPaterno: item.apellidoPaterno,
-                        rol: cargo,
-                        id: item.idUser
+                        rol: cargo
                     };
                 });
         
                 const usuariosConRoles = await Promise.all(rolesPromises);
         
-                setData(usuariosConRoles);
+                setData(usuariosConRoles.filter(item => item.status === 'Activo'));
                 setFilteredData(usuariosConRoles.filter(item => item.status === 'Activo'));
 
             } else {
@@ -168,12 +167,12 @@ export default function Usuarios() {
                         {
                             filteredData
                                 .map((item, index) =>
-                                    <tr key={item.idUser} className='text-center'>
+                                    <tr key={item.nombreUsuario} className='text-center'>
                                         <td className="bg-white text-black">
                                             <input
                                                 type="radio"
-                                                checked={selectedRow === item.id}
-                                                onChange={() => toggleCheckbox(item.id)}
+                                                checked={selectedRow === item.nombreUsuario}
+                                                onChange={() => toggleCheckbox(item.nombreUsuario)}
                                             />
                                         </td>
 

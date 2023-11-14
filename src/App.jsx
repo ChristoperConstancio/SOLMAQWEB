@@ -10,6 +10,10 @@ import Roles from './components/Roles';
 import Clientes from './components/Clientes';
 import AgregarCliente from './components/AgregarCliente';
 import ModificarCliente from './components/ModificarCliente';
+import RFQ from './components/RFQs/RFQ';
+import AgregarRFQ from './components/RFQs/AgregarRFQ';
+import RFQServicio from './components/RFQs/RFQServicio';
+import RFQMantenimiento from './components/RFQs/RFQMantenimiento';
 function App() {
 
   const userVerificado = localStorage.getItem('verificado');
@@ -74,6 +78,30 @@ function App() {
           )} />
         <Route path="/ModificarCliente" element={tipoUsuario === '1' ? (
           <><Header /><ModificarCliente /></>
+        ) :
+          (
+            <Bienvenido />
+          )} />
+          <Route path="/RFQ" element={tipoUsuario === '1' ? (
+          <><Header /><RFQ /></>
+        ) :
+          (
+            <Bienvenido />
+          )} />
+          <Route path="/AgregarRFQ" element={tipoUsuario === '1' ? (
+          <><Header /><AgregarRFQ /></>
+        ) :
+          (
+            <Bienvenido />
+          )} />
+           <Route path="/RFQServicio" element={tipoUsuario === '1' ? (
+          <><Header /><RFQServicio /></>
+        ) :
+          (
+            <Bienvenido />
+          )} />
+          <Route path="/RFQMantenimiento" element={tipoUsuario === '1' ? (
+          <><Header /><RFQMantenimiento /></>
         ) :
           (
             <Bienvenido />

@@ -2,7 +2,9 @@ import { getFirestore, collection, getDocs, addDoc } from "firebase/firestore";
 import React, { useEffect, useState } from 'react'
 import fetchData from "../customHooks/getRoles";
 import { useNavigate } from "react-router-dom";
-import {getRol} from "../customHooks/getRol";
+import { getRol } from "../customHooks/getRol";
+import { checkUser } from "../customHooks/getDocs";
+import { addUserDoc } from "../customHooks/editingUser";
 export default function AgregarUsuario() {
     const [options, setOptions] = useState([]);
     const [selectedOption, setSelectedOption] = useState("");
@@ -20,57 +22,54 @@ export default function AgregarUsuario() {
     }
     const addUser = async (e) => {
         e.preventDefault();
+        const userCheck = await checkUser(username);
         const { id } = await getRol(selectedOption);
-        const idUser = nombre.value.substring(0, 3) + paterno.value.substring(0, 3);
-        const db = getFirestore();
-        const usersRef = collection(db, "Usuarios");
-        try {
-            if (!username.value || !paterno.value || !password.value || !nombre.value || !materno.value) {
-                alert('Llena todos los campos');
-            } else {
-                await addDoc(usersRef, {
-                    nombreUsuario: username.value,
+        if(!userCheck){
+            alert("Intenta con otro Usuario")
+            return false;
+        } 
+        if (!username.value || !paterno.value || !password.value || !nombre.value || !materno.value || id == null) {
+            alert('Llena todos los campos');
+            
+        }else{
+            console.log("aqui")
+            const userChecked = {
+                nombreUsuario: username.value,
                     apellidoPaterno: paterno.value,
                     apellidoMaterno: materno.value,
                     nombre: nombre.value,
                     password: password.value,
                     rol: id,
-                    idUser,
                     status: 'Activo'
-                });
-                alert('Usuario Creado')
-                nombre.value = '';
-                paterno.value = '';
-                materno.value = '';
-                username.value = '';
-                password.value = '';
-
-
             }
-
-        } catch (error) {
-            alert('Error al crear usuario')
+            const newUser = await addUserDoc(userChecked);
+            if(newUser){
+                alert("Usuario Creado!")
+                navigate('/Usuarios')
+            }else{
+                alert("Hubo un problema al crear el usuario")
+            }
         }
-
+        
 
     }
     useEffect(() => {
 
         const obtenerDatos = async () => {
             try {
-              const rolOptions = await fetchData(); // Llama a la función fetchData
-              setOptions(rolOptions); // Asigna el resultado al estado "data"
+                const rolOptions = await fetchData(); // Llama a la función fetchData
+                setOptions(rolOptions); // Asigna el resultado al estado "data"
             } catch (error) {
-              console.error("Error al obtener datos:", error);
+                console.error("Error al obtener datos:", error);
             }
-          };
-          obtenerDatos();
+        };
+        obtenerDatos();
     }, []);
     return (
         <div className='h-screen bg-black space-y-8 px-20'>
             <h1 className='font-bold text-white text-3xl text-center'>Agregar Usuario</h1>
             <form action="click">
-                <div className='grid grid-rows-3 grid-cols-2 items-center justify-center  mx-20 gap-y-4 w-screen' >
+                <div className='grid grid-rows-3 grid-cols-2 items-center justify-center  mx-20 gap-y-4 ' >
 
                     <div className='space-x-10 flex '>
                         <h1 className="text-white text-3xl">Usuario: </h1>
