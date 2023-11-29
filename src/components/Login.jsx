@@ -19,13 +19,15 @@ function Login() {
 
   const logear = async (e) => {
     e.preventDefault();
-    const {success, nombre, rol} = await loginUser(usuario, pass);
+    const { success, nombre, rol } = await loginUser(usuario, pass);
     if (success) {
       setIsLogged(true);
       localStorage.setItem('username', nombre)
       localStorage.setItem('verificado', true)
       localStorage.setItem('tipo', rol)
-    }else{
+      navigate('/bienvenido');
+
+    } else {
       alert(nombre)
     }
   }
@@ -34,9 +36,6 @@ function Login() {
     setPasswordVisible(!passwordVisible);
   };
 
-  if (isLogged) {
-    navigate('/bienvenido');
-  }
   return (
 
     <div className='flex justify-center items-center bg-black min-h-screen'>
