@@ -13,7 +13,11 @@ import ModificarCliente from './components/ModificarCliente';
 import RFQ from './components/RFQs/RFQ';
 import AgregarRFQ from './components/RFQs/AgregarRFQ';
 import RFQServicio from './components/RFQs/RFQServicio';
-import RFQMantenimiento from './components/RFQs/RFQMantenimiento';
+import RFQPiezas from './components/RFQs/RFQPiezas';
+import RFQPiezasView from './components/RFQs/RFQPiezasView';
+import RFQPiezasEditar from './components/RFQs/RFQPiezasEditar';
+import RFQServicioView from './components/RFQs/RFQServiciosView';
+import RFQServicioEditar from './components/RFQs/RFQServicioEditar';
 function App() {
 
   const userVerificado = localStorage.getItem('verificado');
@@ -100,12 +104,39 @@ function App() {
           (
             <Bienvenido />
           )} />
-          <Route path="/RFQMantenimiento" element={tipoUsuario === '1' ? (
-          <><Header /><RFQMantenimiento /></>
+          <Route path="/RFQPiezas" element={tipoUsuario === '1' ? (
+          <><Header /><RFQPiezas /></>
         ) :
           (
             <Bienvenido />
           )} />
+           <Route path="/RFQPiezasView" element={tipoUsuario === '1' ? (
+          <><Header /><RFQPiezasView /></>
+        ) :
+          (
+            <Bienvenido />
+          )} />
+          <Route path="/RFQPiezasEditar" element={tipoUsuario === '1' ? (
+          <><Header /><RFQPiezasEditar /></>
+        ) :
+          (
+            <Bienvenido />
+          )
+          } />
+          <Route path="/RFQServicioView" element={tipoUsuario === '1' ? (
+          <><Header /><RFQServicioView /></>
+        ) :
+          (
+            <Bienvenido />
+          )
+          } />
+          <Route path="/RFQServicioEditar" element={tipoUsuario === '1' ? (
+          <><Header /><RFQServicioEditar /></>
+        ) :
+          (
+            <Bienvenido />
+          )
+          } />
       </Routes>
     </Router>
   );

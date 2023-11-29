@@ -5,7 +5,7 @@ function Roles() {
 
     const [options, setOptions] = useState([]);
     const [selectedOption, setSelectedOption] = useState();
-
+    const [filteredData, setFilteredData] = useState([])
     const rolnew = document.getElementById('rolnew');
     const roledit = document.getElementById('roledit');
 
@@ -66,8 +66,8 @@ function Roles() {
     const obtenerDatos = async () => {
         try {
             const datos = await fetchData();
-            console.log(datos) // Llama a la función fetchData
             setOptions(datos); // Asigna el resultado al estado "data"
+            setFilteredData(datos)
         } catch (error) {
             console.error("Error al obtener datos:", error);
         }
@@ -91,6 +91,33 @@ function Roles() {
 
     return (
         <div className='h-screen bg-black'>
+            <div>
+            <table className="table-auto w-full">
+                    <thead>
+                        <tr className="bg-yellow-500 h-10 ">
+                            <th></th>
+                            <th>Cargo</th>
+                           
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            filteredData
+                                .map((item, index) =>
+                                    <tr key={item.nombreUsuario} className='text-center'>
+                                        
+
+                                        <td className="bg-white text-black">{index}</td>
+                                        <td className="bg-white text-black">{item.cargo}</td>
+
+
+                                    </tr>
+
+
+                                )}
+                    </tbody>
+                </table>
+            </div>
             <div className='text-center'>
                 <h1 className='text-white font-bold text-4xl'>Gestionar Roles</h1>
             </div>

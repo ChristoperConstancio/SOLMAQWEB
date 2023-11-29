@@ -46,6 +46,6 @@ export const addUserDoc = async (id) => {
     await addDoc(usersRef, id);
     return true;
   } catch (error) {
-  alert('Error en la base de datos: al crear usuario ' + error)
-}
+    alert('Error en la base de datos: al crear usuario ' + error)
+  }
 }

@@ -29,7 +29,7 @@ export default function Usuarios() {
         if (selectedRow == null) {
             alert('Elige un usuario')
         } else {
-            const validar = prompt("Escribe SI para eliminar y NO para cancelar");
+            const validar = prompt(`Escribe SI para eliminar a ${selectedRow} y NO para cancelar`);
 
             if (validar == "NO") return false;
             if (validar == "SI") {

@@ -3,7 +3,7 @@ import add from '../../assets/add.png'
 import edit from '../../assets/editing.png'
 import remove from '../../assets/remove.png'
 import { Link } from 'react-router-dom'
-import fetchRFQ from '../../customHooks/RFQ'
+import {fetchRFQ, inactivateRFQ} from '../../customHooks/RFQ'
 import view from '../../assets/view.png'
 import getClientes from '../../customHooks/getClients'
 import { useNavigate } from 'react-router-dom'
@@ -13,22 +13,59 @@ function RFQ() {
     const [filteredData, setFilteredData] = useState()
     const [selectedRow, setSelectedRow] = useState()
     const [optionsCustomer, setOptionsCustomer] = useState([])
-    const [customerSelected, setCustomerSelected] = useState()
+    const [rfqSelected, setRfqSelected] = useState()
     const toggleCheckbox = (id) => {
-        if (selectedRow === id) {
+        const { Id_rfq, esMant, RFC, Total} = id
+        localStorage.setItem('razon',RFC)
+        localStorage.setItem('total',Total)
+        if(esMant.toString() === 'true'){
+            setRfqSelected('esMant')
+        }else{
+            setRfqSelected('esPz');
+        }
+        if (selectedRow === Id_rfq) {
             setSelectedRow(null); // Desmarca la fila si ya está seleccionada
         } else {
-            setSelectedRow(id); // Marca la nueva fila
+            setSelectedRow(Id_rfq); // Marca la nueva fila
         }
     };
     const filter = (e) => {
-        setFilteredData(rfq.filter (item => item.RFC == e.target.value))
+        setFilteredData(rfq.filter (item =>{
+            return item.RFC == e.target.value;
+        } ))
     }
-    
+
+    const viewRfqs = () => {
+        localStorage.setItem('rfq', selectedRow)
+        if(rfqSelected == null){
+            alert("Selecciona un RFQ")
+            return false;
+        }
+        if(rfqSelected == "esMant"){
+            navigate('/RFQServicioView')
+        }else{
+            navigate('/RFQPiezasView')
+        }
+    }
+    const inactivateRFQs = async () => {
+        if(selectedRow == null || selectedRow == ''){
+            alert("selecciona un rfq");
+            return false;
+        }
+        const okChecked = prompt(`Seguro que quieres eliminar ${selectedRow}, escribe OK`);
+        if(okChecked != 'OK') return false;
+        const isInactivate = await inactivateRFQ(selectedRow);
+        if(isInactivate){
+            const deleteUpdate = filteredData.filter ( item => selectedRow != item.Id_rfq)
+            setFilteredData(deleteUpdate)
+            alert("Borrado completado");
+        }
+    }
     useEffect(() => {
         const getRFQ = async () => {
             const data = await fetchRFQ();
-            setRfq(data);
+            const filterData = data.filter( item => item.state == "Activo")
+            setRfq(filterData);
             
         }
         const getCustomers  = async () => {
@@ -70,17 +107,13 @@ function RFQ() {
                             <img src={add} alt="" className='h-4 w-4' />
                         </div>
                     </Link>
-                    <button >
-                        <div className='bg-amber-400 rounded-xl w-10 flex justify-center h-full items-center'>
-                            <img src={edit} alt="" className='h-4 w-4' />
-                        </div>
-                    </button>
-                    <button >
+                    <button onClick={inactivateRFQs} >
                         <div className='bg-red-400 rounded-xl w-10 flex justify-center h-full items-center'>
                             <img src={remove} alt="" className='w-4 h-4' />
                         </div>
                     </button>
-                    <button >
+                    <button 
+                    onClick={viewRfqs}>
                         <div className='bg-indigo-700 rounded-xl w-10 flex justify-center h-full items-center'>
                             <img src={view} alt="" className='w-7 h-7'/>
                         </div>
@@ -92,6 +125,7 @@ function RFQ() {
                         <thead>
                             <tr className="bg-yellow-500 h-10 ">
                                 <th></th>
+                                <th>N° RFQ</th>
                                 <th>Pieza</th>
                                 <th>Servicio</th>
                                 <th>Total</th>
@@ -99,16 +133,17 @@ function RFQ() {
                             </tr>
                         </thead>
                         <tbody>
-                            {filteredData ?
+                            {filteredData ?   
                                 filteredData.map((item, index) =>
-                                    <tr key={item.RFC} className='text-center'>
+                                    <tr key={item.Id_rfq} className='text-center'>
                                         <td className="bg-white text-black">
                                             <input
                                                 type="radio"
-                                                checked={selectedRow === item.RFC}
-                                                onChange={() => toggleCheckbox(item.RFC)}
+                                                checked={selectedRow === item.Id_rfq}
+                                                onChange={() => toggleCheckbox(item)}
                                             />
                                         </td>
+                                        <td className="bg-white text-black">{item.Id_rfq}</td>
                                         <td className="bg-white text-black">{item.esPz.toString()}</td>
                                         <td className="bg-white text-black">{item.esMant.toString()}</td>
                                         <td className="bg-white text-black">{item.Total}</td>
