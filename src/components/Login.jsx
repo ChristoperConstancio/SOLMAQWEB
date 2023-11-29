@@ -1,6 +1,6 @@
 import React from 'react'
 import userImg from '../assets/user.png'
-import padLock from '../assets/padLock.png'
+import padLock from '../assets/padlock.png'
 import showOff from '../assets/show.png'
 import hide from '../assets/hide.png'
 import logo from '../assets/SOLMAQ.png'
