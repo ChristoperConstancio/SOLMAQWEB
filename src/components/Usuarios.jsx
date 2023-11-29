@@ -24,7 +24,7 @@ export default function Usuarios() {
             navigate('/EditarUsuario')
         }
     }
-    const inactivateUser = () => {
+    const inactivateUser = async () => {
 
         if (selectedRow == null) {
             alert('Elige un usuario')
@@ -33,7 +33,7 @@ export default function Usuarios() {
 
             if (validar == "NO") return false;
             if (validar == "SI") {
-                const isSuccesful = inactivate(selectedRow)
+                const isSuccesful = await inactivate(selectedRow)
                 setFilteredData((prevData) => prevData.filter(item => item.id !== selectedRow));
                 setData((prevData) => prevData.filter(item => item.id !== selectedRow));
 
