@@ -31,12 +31,7 @@ function App() {
           <><Header /><Bienvenido /></>
         ) :
           (
-            <Routes>
-              <Route
-                path="*"
-                element={<Navigate to="/" />}
-              />
-            </Routes>
+            <Bienvenido />
 
           )} />
         <Route path="/Usuarios" element={tipoUsuario === '1' ? (
@@ -49,12 +44,7 @@ function App() {
           <><Header /><AgregarUsuario /></>
         ) :
           (
-            <Routes>
-              <Route
-                path="*"
-                element={<Navigate to="/" />}
-              />
-            </Routes>
+            <Bienvenido />
           )} />
         <Route path="/EditarUsuario" element={tipoUsuario === '1' ? (
           <><Header /><EditarUsuario /></>
