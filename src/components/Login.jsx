@@ -21,12 +21,15 @@ function Login() {
     e.preventDefault();
     const { success, nombre, rol } = await loginUser(usuario, pass);
     if (success) {
-      setIsLogged(true);
-      localStorage.setItem('username', nombre)
-      localStorage.setItem('verificado', true)
-      localStorage.setItem('tipo', rol)
-      navigate('/bienvenido');
-
+      try {
+        setIsLogged(true);
+        localStorage.setItem('username', nombre);
+        localStorage.setItem('verificado', true);
+        localStorage.setItem('tipo', rol);
+        navigate('/bienvenido');
+      } catch (error) {
+        console.error('Error:', error);
+      }
     } else {
       alert(nombre)
     }
