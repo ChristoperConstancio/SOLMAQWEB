@@ -19,6 +19,45 @@ export async function fetchRFQ() {
         console.error("Error al obtener datos de Firebase:", error);
     }
 };
+export async function fetchRFQV(id) {
+    try {
+        const db = getFirestore();
+        const optionsRef = collection(db, "Rfq"); // Reemplaza "opciones" con el nombre de tu colección
+        const q = query(optionsRef, where("nuVenta", "==", parseInt(id)));
+        const querySnapshot = await getDocs(q);
+
+        const optionsData = [];
+        if(querySnapshot.size <= 0) return false;
+        querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            optionsData.push(data); // Ajusta según la estructura de tus documentos
+        });
+
+        return optionsData;
+    } catch (error) {
+        console.error("Error al obtener datos de Firebase:", error);
+    }
+};
+export async function fetchRFQVenta(id) {
+    try {
+        const db = getFirestore();
+
+        const optionsRef = collection(db, "Rfq"); // Reemplaza "opciones" con el nombre de tu colección
+        const q = query(optionsRef, where("RFC", "==", id));
+        const querySnapshot = await getDocs(q);
+
+        const optionsData = [];
+        if(querySnapshot.size <= 0) return false;
+        querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            optionsData.push(data); // Ajusta según la estructura de tus documentos
+        });
+
+        return optionsData;
+    } catch (error) {
+        console.error("Error al obtener datos de Firebase:", error);
+    }
+};
 export async function fetchRFQPiezas(id) {
     try {
         const db = getFirestore();
@@ -154,6 +193,7 @@ export async function inactivateRFQ(id) {
 
         if (querySnapshot.size === 0) {
             console.log('No se encontraron documentos con el ID proporcionado.');
+            return false;
         } else {
             querySnapshot.forEach(async (queryDocumentSnapshot) => {
                 const docRef = doc(collectionRef, queryDocumentSnapshot.id);
@@ -317,6 +357,39 @@ export async function inactivateRFQP(id) {
         } else {
             querySnapshot.forEach(async (queryDocumentSnapshot) => {
                 console.log(id)
+
+                const docRef = doc(collectionRef, queryDocumentSnapshot.id);
+
+                // Realiza la actualización del atributo del documento
+                const updateData = {
+                    state: "Inactivo"
+                };
+                await updateDoc(docRef, updateData);
+            })
+        }
+        return true;
+
+    } catch (error) {
+        return false;
+    }
+}
+export async function inactivateRFQS(id) {
+
+    // Obtén la referencia a la colección
+    const db = getFirestore();
+
+    const collectionRef = collection(db, 'Rfq_mant');
+    // Realiza una consulta para buscar el documento con el atributo "nombre" igual a "Ejemplo"
+    const q = query(collectionRef, where("idRFQ", "==", id));
+
+    try {
+        const querySnapshot = await getDocs(q);
+
+        if (querySnapshot.size === 0) {
+            console.log('No se encontraron documentos con el ID proporcionado.');
+            return false;
+        } else {
+            querySnapshot.forEach(async (queryDocumentSnapshot) => {
 
                 const docRef = doc(collectionRef, queryDocumentSnapshot.id);
 

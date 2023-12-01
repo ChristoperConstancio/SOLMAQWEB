@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { fetchRFQPiezas, fetchRFQSer, inactivateRFQP } from '../../customHooks/RFQ'
+import { fetchRFQSer,  inactivateRFQS } from '../../customHooks/RFQ'
 import editClient from '../../customHooks/editClient'
 import { useNavigate } from 'react-router-dom'
 import edit from '../../assets/editing.png'
@@ -32,9 +32,9 @@ export default function RFQServicioView() {
         if(ques != 'OK'){
             return false;
         }
-        const isDeleted = await inactivateRFQP(selectRfq)
+        const isDeleted = await inactivateRFQS(selectRfq)
         if(isDeleted) alert("Borrado!")
-        const cleanDeleted = rfqs.filter( item => item.name != selectRfq);
+        const cleanDeleted = rfqs.filter( item => item.idRFQ != selectRfq);
         setRfqs(cleanDeleted)
     }
     useEffect(() => {
@@ -98,7 +98,7 @@ export default function RFQServicioView() {
                                 <td className="bg-white text-black">
                                     <input
                                         type="radio"
-                                        onChange={() => toggleCheckbox(item.nombre)}
+                                        onChange={() => toggleCheckbox(item.idRFQ)}
                                     />
                                 </td>
                                 <td className="bg-white text-black">{item.nombre}</td>
@@ -107,11 +107,6 @@ export default function RFQServicioView() {
                                 <td className="bg-white text-black">{item.fecha}</td>
                                 <td className="bg-white text-black">{item.horaentrada}</td>
                                 <td className="bg-white text-black">{item.horasalida}</td>
-
-
-
-
-
                             </tr>
                         ) : <h1 className='text-white'>Selecciona una empresa o Empresa no tiene RFQ</h1>}
                 </tbody>

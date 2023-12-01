@@ -28,8 +28,9 @@ export default async function inactivate(id) {
                 };
                 
                 await updateDoc(docRef, updateData);
-                return true;
             })
+            return true;
+
         }
     } catch (error) {
         return false;

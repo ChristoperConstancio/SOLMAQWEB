@@ -42,7 +42,6 @@ export default function Clientes() {
     }
 
     const toggleCheckbox = (id) => {
-        console.log(id)
         if (selectedRow === id) {
             setSelectedRow(null); // Desmarca la fila si ya está seleccionada
         } else {
@@ -55,7 +54,8 @@ export default function Clientes() {
     const filter = () => {
         // Aplicar el filtro a la copia de los datos originales
         const filtered = data.filter((item) => {
-            return item.RazonSocial === target.value;
+         
+            return item.Razonsocial === target.value;
         });
 
         // Actualizar el estado con los resultados del filtro

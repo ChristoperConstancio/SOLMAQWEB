@@ -18,7 +18,7 @@ function AgregarRFQ() {
     }
   
     const addRFQ = async (e) => {
-        const numeroAleatorio = Math.floor(Math.random() * 1000);
+        const numeroAleatorio = Math.floor(Math.random() * 100000);
         const idRFQ = razon.value.substring(0,4) + numeroAleatorio ;
         const checked = await checkRFQ(idRFQ);
         if(!checked){
@@ -33,7 +33,7 @@ function AgregarRFQ() {
         }
         
         const isSelected = prompt(`Escribe "OK" para confirmar el RFQ de tipo ${type}`)
-        console.log(isSelected)
+        const todayDate = new Date();
         if(isSelected == "OK" || isSelected == 'ok'){
             if( servicio.value == "true"  ){
                 const docRFQ = {
@@ -42,7 +42,8 @@ function AgregarRFQ() {
                     Total : 0,
                     esMant : true,
                     esPz : false,
-                    state : 'Activo'
+                    state : 'Activo',
+                    fecha : todayDate
                 }
                 const isSuccesful = await addRFQs(docRFQ);
                 if(isSuccesful){
@@ -59,7 +60,8 @@ function AgregarRFQ() {
                     Total: 0,
                     esMant : false,
                     esPz : true,
-                    state : 'Activo'
+                    state : 'Activo',
+                    fecha : todayDate
                 }
                 const isSuccesful = await addRFQs(docRFQ);
                 

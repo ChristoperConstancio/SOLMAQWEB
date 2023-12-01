@@ -98,7 +98,6 @@ function RFQ() {
                                 </option>
                             )) : <h1  className='text-white'> No se encontraron clientes</h1>}
                         </select>
-
                     </div>
                 </div>
                 <div className='flex justify-end mx-10 space-x-3 h-10 '>
@@ -118,7 +117,6 @@ function RFQ() {
                             <img src={view} alt="" className='w-7 h-7'/>
                         </div>
                     </button>
-
                 </div>
                 <div className='my-5 mx-10'>
                     <table className="table-auto w-full">
@@ -147,7 +145,6 @@ function RFQ() {
                                         <td className="bg-white text-black">{item.esPz.toString()}</td>
                                         <td className="bg-white text-black">{item.esMant.toString()}</td>
                                         <td className="bg-white text-black">{item.Total}</td>
-
                                     </tr>
                                 ) : <h1 className='text-white'>Selecciona una empresa o Empresa no tiene RFQ</h1>}
                         </tbody>

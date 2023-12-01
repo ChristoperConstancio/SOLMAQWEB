@@ -18,6 +18,12 @@ import RFQPiezasView from './components/RFQs/RFQPiezasView';
 import RFQPiezasEditar from './components/RFQs/RFQPiezasEditar';
 import RFQServicioView from './components/RFQs/RFQServiciosView';
 import RFQServicioEditar from './components/RFQs/RFQServicioEditar';
+import Ventas from './components/Ventas/Ventas';
+import AgregarVenta from './components/Ventas/AgregarVenta';
+import VentasView from './components/Ventas/VentasView';
+import VentasEditar from './components/Ventas/VentasEditar';
+import Cobros from './components/Cobros/Cobros';
+import AgregarCobro from './components/Cobros/AgregarCobro';
 function App() {
 
   const userVerificado = localStorage.getItem('verificado');
@@ -36,6 +42,42 @@ function App() {
           )} />
         <Route path="/Usuarios" element={tipoUsuario === '1' ? (
           <><Header /><Usuarios /></>
+        ) :
+          (
+            <Bienvenido />
+          )} />
+          <Route path="/Ventas" element={tipoUsuario === '1' ? (
+          <><Header /><Ventas /></>
+        ) :
+          (
+            <Bienvenido />
+          )} />
+          <Route path="/VentasView" element={tipoUsuario === '1' ? (
+          <><Header /><VentasView /></>
+        ) :
+          (
+            <Bienvenido />
+          )} />
+           <Route path="/AgregarCobro" element={tipoUsuario === '1' ? (
+          <><Header /><AgregarCobro /></>
+        ) :
+          (
+            <Bienvenido />
+          )} />
+          <Route path="/Cobros" element={tipoUsuario === '1' ? (
+          <><Header /><Cobros /></>
+        ) :
+          (
+            <Bienvenido />
+          )} />
+          <Route path="/VentasEditar" element={tipoUsuario === '1' ? (
+          <><Header /><VentasEditar /></>
+        ) :
+          (
+            <Bienvenido />
+          )} />
+          <Route path="/AgregarVenta" element={tipoUsuario === '1' ? (
+          <><Header /><AgregarVenta /></>
         ) :
           (
             <Bienvenido />
