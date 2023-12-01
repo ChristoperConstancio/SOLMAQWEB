@@ -37,7 +37,7 @@ function AgregarVenta() {
       if(isActivating){
         const totalT = total + parseInt(e.Total);
         setTotal(totalT)
-        setFormData({...formData, subtotal : totalT , total : totalT + (totalT*.16), iva : totalT*.16, total : totalT+ (totalT*.16)})
+        setFormData({...formData, subtotal : totalT , total : totalT + (totalT*.16), iva : totalT*.16, saldo : totalT+ (totalT*.16)})
       }else{
         const totalT = total - parseInt(e.Total);
         setTotal(totalT)

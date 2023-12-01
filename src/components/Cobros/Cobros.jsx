@@ -79,7 +79,11 @@ function Cobros() {
     return (
         <div className='h-screen bg-black space-y-5'>
             <div className='flex justify-between px-10 '>
-                <h1 className='text-white '>Ventas</h1>
+                <div>
+                    <h1 className='text-white text-4xl font-bold'>Ventas</h1>
+                    <h2 className='text-white text-2xl font-bold'>Registradas</h2>
+                </div>
+
                 <div className='flex flex-col space-y-2'>
                     <label htmlFor="" className='text-white'>Filtrar por Cliente: </label>
                     <select
@@ -155,6 +159,7 @@ function Cobros() {
                     </tbody>
                 </table>
             </div>
+            
 
         </div>
     )

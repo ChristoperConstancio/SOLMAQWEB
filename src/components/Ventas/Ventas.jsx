@@ -6,6 +6,8 @@ import view from '../../assets/view.png'
 import { Link, useNavigate } from 'react-router-dom';
 import { getVentasAll } from '../../customHooks/Ventas';
 import edit from '../../assets/editing.png'
+import { PDFViewer } from '@react-pdf/renderer';
+import Reportes from '../../customHooks/Reportes';
 
 function Ventas() {
     const [optionsCustomer, setOptionsCustomer] = useState([])
@@ -13,6 +15,7 @@ function Ventas() {
     const [vtas, setVtas] = useState([])
     const [selectedRow, setSelectedRow] = useState()
     const navigate = useNavigate();
+    const [verPDF, setVerPDF] = useState(false)
     const filter = (e) => {
         setFilteredData(vtas.filter(item => {
             return item.RFC == e.target.value;
@@ -40,6 +43,14 @@ function Ventas() {
             return;
         } else {
             navigate('/VentasEditar');
+        }
+    }
+    const generateReport = () => {
+        if (selectedRow == null || selectedRow == '') {
+            alert("Selecciona una venta");
+            return;
+        } else {
+            setVerPDF(true)
         }
     }
     const viewVentas = () => {
@@ -88,6 +99,7 @@ function Ventas() {
                 </div>
             </div>
             <div className='flex justify-end mx-10 space-x-3 h-10 '>
+                
                 <button onClick={modify}>
                     <div className='bg-amber-400 rounded-xl w-10 flex justify-center h-full items-center'>
                         <img src={edit} alt="" className='h-4 w-4' />
@@ -103,6 +115,7 @@ function Ventas() {
                         <img src={remove} alt="" className='w-4 h-4' />
                     </div>
                 </button>
+
                 <button
                     onClick={viewVentas}>
                     <div className='bg-indigo-700 rounded-xl w-10 flex justify-center h-full items-center'>
@@ -142,7 +155,8 @@ function Ventas() {
                     </tbody>
                 </table>
             </div>
-
+            
+            
         </div>
     )
 }
