@@ -5,6 +5,7 @@ import edit from '../../assets/editing.png'
 import remove from '../../assets/remove.png'
 import { addCobro, cobroCode } from '../../customHooks/Cobros'
 import { getVentasNu } from '../../customHooks/Ventas'
+import { useNavigate } from 'react-router-dom'
 function AgregarCobro() {
 
     const [cobro, setCobro] = useState([])
@@ -13,6 +14,7 @@ function AgregarCobro() {
     const salvar = async () => {
         const x = document.getElementById('monto').value;
         const confirmar = document.getElementById('confirmar').value;
+        const navigate = useNavigate()
         if(x !== confirmar || x == ''){
             alert("Montos no coinciden o vacios")
             return;
@@ -42,6 +44,7 @@ function AgregarCobro() {
             return false;
         }
         alert("agregado exitoso")
+        navigate('/Cobros')
     }
     const cancel = () => {
         e.preventDefault();
@@ -69,13 +72,15 @@ function AgregarCobro() {
                 // El atributo nuCobro está presente en ventaInfo
                 document.getElementById('tipo').value = "Liquidacion"
                 setCobro({...cobro, tipoPago : 'Liquidacion'});
+
             } else {
                 // El atributo nuCobro no está presente en ventaInfo
                 document.getElementById('tipo').value = "Anticipo"
                 setCobro({...cobro, tipoPago : 'Anticipo'})
-
+                ventaInfo.saldo = ventaInfo.total;
             }
-            setVenta(ventaInfo);
+            setVenta(ventaInfo)
+            
 
         }
         const setFecha = () => {
@@ -105,7 +110,7 @@ function AgregarCobro() {
                 </div>
                 <div className='space-x-8 '>
                     <label htmlFor="" className='text-white text-3xl'>Saldo :</label>
-                    <input id='saldo' className='pl-3 rounded-lg w-72 h-10' value={venta.saldo} type="number" />
+                    <input id='saldo' className='pl-3 rounded-lg w-72 h-10' value={venta.saldo} type="number" readOnly />
                 </div>
                 <div className='space-x-8 '>
                     <label htmlFor="" className='text-white text-3xl'>N° Venta :</label>

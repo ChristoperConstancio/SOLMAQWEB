@@ -1,12 +1,15 @@
+
 import React, { useEffect, useState } from 'react'
 import { Document, Page, Text, View, StyleSheet, Image } from '@react-pdf/renderer';
 import { createTw } from "react-pdf-tailwind";
-import { getVentasAll } from './Ventas';
-import logo from '../assets/SOLMAQ.png'
+import logo from '../../assets/SOLMAQ.png'
+import firma from '../../assets/firma.jpg'
 
-function Reportes({ informacion, cliente }) {
-    // The 'theme' object is your Tailwind theme config
-    const tw = createTw({
+
+function ReportesStatus({informacion, caja}) {
+
+       // The 'theme' object is your Tailwind theme config
+       const tw = createTw({
         theme: {
             fontFamily: {
                 sans: ["Comic Sans"],
@@ -18,12 +21,14 @@ function Reportes({ informacion, cliente }) {
             },
         },
     });
-
-
-    return (
-        <Document>
+    useEffect(() => {
+      
+    }, [])
+    
+  return (
+    <Document>
             <Page size={'A4'} style={tw("p-12 w-screen")}>
-                <View>
+                <View >
                     <View style={(tw("mx-5 justify-between flex"))}>
                         <View style={(tw(" text-right"))}>
 
@@ -32,12 +37,7 @@ function Reportes({ informacion, cliente }) {
                             <Text style={(tw('text-sm'))}>Libramiento Oscar Flores Tapia #1030</Text>
                         </View>
                         <View style={tw('')}>
-                            <Text style={(tw('text-sm'))}>Cliente : {cliente.Razonsocial}</Text>
-                            <Text style={(tw('text-sm'))}>Direccion : {cliente.Direccion}</Text>
-                            <Text style={(tw('text-sm'))}>Telefono : {cliente.Telefono}</Text>
-                            <Text style={(tw('text-sm'))}>Contacto : {cliente.Contacto}</Text>
-                            <Text style={(tw('text-sm'))}>RFC : {cliente.RFC}</Text>
-                            <Text style={(tw('text-sm'))}>Correo : {cliente.Correo}</Text>
+                            <Text style={(tw('text-sm'))}>Reporte de resultados</Text>
                         </View>
 
                     </View>
@@ -80,12 +80,25 @@ function Reportes({ informacion, cliente }) {
                                 </View>
                             ))}
                         </View>
+                        <View style={tw('text-right')}>
+                            <Text></Text>
+                            <Text style={(tw('text-sm'))}>Dinero en Caja : ${caja.dinero}</Text>
+                            <Text style={(tw('text-sm'))}>Dinero Pendiente : ${caja.adeudo}</Text>
+
+                        </View>
+                    </View>
+                    <View style={(tw("mx-32"))}>
+                            
+                            
+                            <Image src={firma} alt="" style={(tw('w-52 h-44'))} />
+                            <Text style={(tw('text-sm'))}>Ing. Christoper Constancio</Text>
+
                     </View>
 
                 </View>
             </Page>
         </Document>
-    )
+  )
 }
 
-export default Reportes
+export default ReportesStatus

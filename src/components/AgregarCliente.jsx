@@ -1,5 +1,6 @@
 import { getFirestore, collection, getDocs, addDoc } from "firebase/firestore";
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from "react-router-dom";
 export default function AgregarCliente() {
     const razonsocial = document.getElementById('razonsocial');
     const rfc = document.getElementById('rfc');
@@ -7,12 +8,11 @@ export default function AgregarCliente() {
     const contacto = document.getElementById('contacto');
     const correo = document.getElementById('correo');
     const telefono = document.getElementById('telefono');
-
+    const navigate = useNavigate();
     const addClient = async (e) => {
         e.preventDefault();
         const db = getFirestore();
         const usersRef = collection(db, "Clientes");
-        const id = razonsocial.value.substring(0, 2) + rfc.value.substring(0, 2);
 
         try {
             if (!razonsocial.value || !rfc.value || !direccion.value || !contacto.value || !correo.value || !telefono.value) {
@@ -25,7 +25,6 @@ export default function AgregarCliente() {
                     Contacto: contacto.value,
                     Correo: correo.value,
                     Telefono : telefono.value,
-                    id,
                     Status: 'Activo'
                 });
                 alert('Cliente Creado')
@@ -35,7 +34,7 @@ export default function AgregarCliente() {
                 contacto.value = '';
                 correo.value = '';
                 telefono.value ='';
-
+                navigate('/Clientes')
 
             }
 
