@@ -1,7 +1,7 @@
-import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
+import { getFirestore, collection, query, where, getDocs,doc, updateDoc } from "firebase/firestore";
 
 
-export default async function fetchData ()  {
+export  async function fetchData ()  {
     try {
         const db = getFirestore();
 
@@ -19,3 +19,30 @@ export default async function fetchData ()  {
         console.error("Error al obtener datos de Firebase:", error);
     }
 };
+
+export const  editR = async (selected, newRol) =>  {
+    const db = getFirestore();
+    const rolesRef = collection(db, "Roles");
+    
+        const q = query(rolesRef, where("cargo", "==", selected));
+        try {
+
+            const querySnapshot = await getDocs(q);
+            
+            querySnapshot.forEach(async (queryDocumentSnapshot) => {
+                const docRef = doc(rolesRef, queryDocumentSnapshot.id);
+
+                // Realiza la actualización del atributo del documento
+                const updateData = {
+                    cargo: newRol
+                };
+
+                await updateDoc(docRef, updateData);
+            })
+            return true;
+
+        } catch (error) {
+            return false;
+        }   
+    
+}

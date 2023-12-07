@@ -80,13 +80,13 @@ function ReportesStatus({informacion, caja}) {
                                 </View>
                             ))}
                         </View>
-                        <View style={tw('text-right')}>
+                    </View>
+                    <View style={tw('text-right')}>
                             <Text></Text>
                             <Text style={(tw('text-sm'))}>Dinero en Caja : ${caja.dinero}</Text>
                             <Text style={(tw('text-sm'))}>Dinero Pendiente : ${caja.adeudo}</Text>
 
                         </View>
-                    </View>
                     <View style={(tw("mx-32"))}>
                             
                             

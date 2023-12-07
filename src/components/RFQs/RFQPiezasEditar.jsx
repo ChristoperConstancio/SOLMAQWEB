@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { editingRFQPieza, fetchRFQPiezasEditar } from '../../customHooks/RFQ';
 import edit from '../../assets/editing.png'
 import remove from '../../assets/remove.png'
+import { useNavigate } from 'react-router-dom';
 function RFQPiezasEditar() {
     const [rfqs, setRfqs] = useState([])
-
+    const navigate = useNavigate();
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setRfqs({
@@ -12,13 +13,19 @@ function RFQPiezasEditar() {
             [name]: value,
         });
     }
+    const cancelAction = (e) => {
+        e.preventDefault();
+        alert("Operacion Cancelada");
+        navigate('/RFQPiezasView');
+    }
     const updateRFQPieza = async () => {
         const isUpdated = await editingRFQPieza(rfqs);
-        if(!isUpdated){
+        if (!isUpdated) {
             alert("Intentalo de nuevo")
             return false;
-        }else{
+        } else {
             alert("Cambio Correcto")
+            navigate('/RFQPiezasView')
         }
     }
     useEffect(() => {
@@ -33,7 +40,7 @@ function RFQPiezasEditar() {
     }, [])
 
     return (
-        <div className='h-screen bg-black'>
+        <div className='h-screen bg-black  '>
             <h1 className='font-bold text-white text-3xl text-center'>Editar RFQ</h1>
             <h1 className='text-white text-center'>RFQ : {rfqs.idRFQ}</h1>
             <div className='mx-20 py-10 grid grid-cols-2 gap-y-8 gap-x-8   ' name='add'>
@@ -80,8 +87,9 @@ function RFQPiezasEditar() {
                 </div>
 
             </div>
-            <div className=" flex justify-center mx-44 space-x-16 mt-5">
+            <div className=" flex justify-center px-44 space-x-16 pt-5 bg-black pb-5">
                 <button className="bg-red-500 hover:bg-red-800 rounded-xl text-white font-bold w-44 h-16"
+                onClick={cancelAction}
                 >
                     <h1 className="text-3xl" > Cancelar </h1>
                 </button>

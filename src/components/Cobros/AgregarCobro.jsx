@@ -11,10 +11,11 @@ function AgregarCobro() {
     const [cobro, setCobro] = useState([])
     const [venta, setVenta] = useState('')
     const [disponible, setDisponible] = useState(false)
+    const navigate = useNavigate()
+    
     const salvar = async () => {
         const x = document.getElementById('monto').value;
         const confirmar = document.getElementById('confirmar').value;
-        const navigate = useNavigate()
         if(x !== confirmar || x == ''){
             alert("Montos no coinciden o vacios")
             return;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { getFirestore, collection, getDocs, addDoc,query, where, doc, updateDoc } from "firebase/firestore";
-import fetchData from '../customHooks/getRoles';
+import {editR, fetchData} from '../customHooks/getRoles';
 function Roles() {
 
     const [options, setOptions] = useState([]);
@@ -33,45 +33,26 @@ function Roles() {
         }
     }
     const editRol = async () => {
-        const db = getFirestore();
-        const rolesRef = collection(db, "Roles");
-        console.log(selectedOption)
-        if (roledit.value == '' || selectedOption == null) {
-            alert('ups... Hay un campo vacio')
-        } else {
-            const q = query(rolesRef, where("cargo", "==", selectedOption));
-
-            try {
-
-                const querySnapshot = await getDocs(q);
-                querySnapshot.forEach(async (queryDocumentSnapshot) => {
-                    const docRef = doc(rolesRef, queryDocumentSnapshot.id);
-
-                    // Realiza la actualización del atributo del documento
-                    const updateData = {
-                        cargo: roledit.value
-                    };
-
-                    await updateDoc(docRef, updateData);
-                })
-                alert('Actualizacion Exitosa!')
-                roledit.value = '';
-
-            } catch (error) {
-                alert("ups... Ha ocurrido un error")
-            }   
+       const newRol = roledit.value.toUpperCase();
+       const check = options.some(item => {
+        item.cargo.toUpperCase() == newRol;
+        console.log(item.cargo.toUpperCase()+ " , " + newRol)
+       })
+       if(check){
+        alert("El rol ya existe!")
+       }else{
+        const editing  = await editR(selectedOption, roledit.value);
+        if(editing){
+            alert("Actualizacion exitosa");
+        }else{
+            alert("Ocurrio un problema, intentalo de nuevo")
         }
+       }
     }
 
-    const obtenerDatos = async () => {
-        try {
-            const datos = await fetchData();
-            setOptions(datos); // Asigna el resultado al estado "data"
-            setFilteredData(datos)
-        } catch (error) {
-            console.error("Error al obtener datos:", error);
-        }
-    };
+    
+ 
+    
 
     const changeInter = () => {
         const divAdd = document.getElementById('addRol')
@@ -86,12 +67,27 @@ function Roles() {
         divAdd.classList.add('hidden')
         divEdit.classList.remove('hidden')
         divEdit.classList.add('flex')
-        obtenerDatos();
     }
+    useEffect(() => {
+        const obtenerDatos = async () => {
+            try {
+                const datos = await fetchData();
+                setOptions(datos); // Asigna el resultado al estado "data"
+                setFilteredData(datos)
+            } catch (error) {
+                console.error("Error al obtener datos:", error);
+            }
+        };
+        obtenerDatos();
 
+    }, [])
+    
     return (
         <div className='h-screen bg-black'>
-            <div>
+             <div className='text-center'>
+                <h1 className='text-white font-bold text-4xl'>Gestionar Roles</h1>
+            </div>
+            <div className='px-52 pt-10'>
             <table className="table-auto w-full">
                     <thead>
                         <tr className="bg-yellow-500 h-10 ">
@@ -118,9 +114,7 @@ function Roles() {
                     </tbody>
                 </table>
             </div>
-            <div className='text-center'>
-                <h1 className='text-white font-bold text-4xl'>Gestionar Roles</h1>
-            </div>
+           
             <div className='text-center mt-10 space-x-7'>
                 <button
                     className='bg-green-500 w-32 rounded-lg h-16 text-white font-bold hover:bg-green-800'

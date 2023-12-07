@@ -30,7 +30,7 @@ function RFQPiezas() {
     let totalFinal = 0;
     if (rfqs.length > 0) {
       rfqs.map(item => {
-        totalFinal += Number(item.costo)
+        totalFinal += Number(item.costo) * Number(item.opp)
       })
       const isSuc = await addRFQPieza(rfqs, totalFinal)
       if(!isSuc) return false;
@@ -126,7 +126,7 @@ function RFQPiezas() {
         </div>
         <div className='space-x-8'>
           <label htmlFor="" className='text-white text-3xl'>Rev :</label>
-          <input id='rev' className='pl-3 rounded-lg w-72 h-10' type="text" onChange={handleInputChange} />
+          <input id='rev' className='pl-3 rounded-lg w-72 h-10' type="number" onChange={handleInputChange} />
         </div>
         <div className='space-x-8'>
           <label htmlFor="" className='text-white text-3xl'>Name :</label>
@@ -142,7 +142,7 @@ function RFQPiezas() {
         </div>
         <div className='space-x-8'>
           <label htmlFor="" className='text-white text-3xl'>Opp Qty : </label>
-          <input id='opp' className='pl-3 rounded-lg w-72 h-10' type="text" onChange={handleInputChange} />
+          <input id='opp' className='pl-3 rounded-lg w-72 h-10' type="number" onChange={handleInputChange} />
         </div>
         <div className='space-x-8'>
           <label htmlFor="" className='text-white text-3xl'>Special Comments : </label>
