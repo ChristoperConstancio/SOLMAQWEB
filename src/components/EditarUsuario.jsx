@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { getFirestore, collection, getDocs, addDoc } from "firebase/firestore";
 import editUser from '../customHooks/editDoc';
 import {editingUser} from '../customHooks/editingUser';
-import fetchData from '../customHooks/getRoles';
+import {fetchData} from '../customHooks/getRoles';
 import { useNavigate } from 'react-router-dom';
 import { getUserRol } from '../customHooks/getRol';
 export default function EditarUsuario() {

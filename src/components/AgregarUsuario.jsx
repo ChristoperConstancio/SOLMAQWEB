@@ -1,6 +1,6 @@
 import { getFirestore, collection, getDocs, addDoc } from "firebase/firestore";
 import React, { useEffect, useState } from 'react'
-import fetchData from "../customHooks/getRoles";
+import {fetchData} from "../customHooks/getRoles";
 import { useNavigate } from "react-router-dom";
 import { getRol } from "../customHooks/getRol";
 import { checkUser } from "../customHooks/getDocs";
