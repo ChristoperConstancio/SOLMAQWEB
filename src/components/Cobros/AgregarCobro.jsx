@@ -69,7 +69,7 @@ function AgregarCobro() {
             const ventaInfo = await getVentasNu(idVenta);
             console.log(ventaInfo)
             // Verificar si ventaInfo tiene el atributo nuCobro
-            if (ventaInfo && ventaInfo.saldo !== undefined) {
+            if (ventaInfo.total === ventaInfo.saldo) {
                 // El atributo nuCobro está presente en ventaInfo
                 document.getElementById('tipo').value = "Liquidacion"
                 setCobro({...cobro, tipoPago : 'Liquidacion'});
