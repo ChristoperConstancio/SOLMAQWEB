@@ -6,7 +6,6 @@ import remove from '../../assets/remove.png'
 import view from '../../assets/view.png'
 import { Link, useNavigate } from 'react-router-dom';
 import { getVentasAll } from '../../customHooks/Ventas';
-import edit from '../../assets/editing.png'
 function Cobros() {
 
     const [optionsCustomer, setOptionsCustomer] = useState([])
@@ -35,14 +34,7 @@ function Cobros() {
             }
         }
     }
-    const modify = () => {
-        if (selectedRow == null || selectedRow == '') {
-            alert("Selecciona una venta");
-            return;
-        } else {
-            navigate('/CobrosEditar');
-        }
-    }
+
     const viewVentas = () => {
         if (selectedRow == null || selectedRow == '') {
             alert("Selecciona una venta");
@@ -79,11 +71,15 @@ function Cobros() {
     return (
         <div className='h-screen bg-black space-y-5'>
             <div className='flex justify-between px-10 '>
+
                 <div>
                     <h1 className='text-white text-4xl font-bold'>Ventas</h1>
                     <h2 className='text-white text-2xl font-bold'>Registradas</h2>
                 </div>
+                <div>
+                    <h1 className='text-white text-4xl font-bold'>Cobros</h1>
 
+                </div>
                 <div className='flex flex-col space-y-2'>
                     <label htmlFor="" className='text-white'>Filtrar por Cliente: </label>
                     <select
@@ -102,11 +98,7 @@ function Cobros() {
                 </div>
             </div>
             <div className='flex justify-end mx-10 space-x-3 h-10 '>
-                <button onClick={modify}>
-                    <div className='bg-amber-400 rounded-xl w-10 flex justify-center h-full items-center'>
-                        <img src={edit} alt="" className='h-4 w-4' />
-                    </div>
-                </button>
+                
                 <button
                     onClick={addCobro}>
                     <div className='bg-green-400 rounded-xl w-10 flex justify-center h-full items-center'>
@@ -159,7 +151,7 @@ function Cobros() {
                     </tbody>
                 </table>
             </div>
-            
+
 
         </div>
     )

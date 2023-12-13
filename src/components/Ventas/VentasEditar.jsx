@@ -11,11 +11,11 @@ function VentasEditar() {
         const fecha = document.getElementById('fechaEntrega').value;
         const data = localStorage.getItem('nuVenta');
         const isSucces = await editarVentas(data, fecha)
-        if(!isSucces) return false;
+        if (!isSucces) return false;
         alert("Cambio exitoso")
         navigate('/Ventas')
     }
-    
+
     const cancel = () => {
         e.preventDefault();
         alert("Operacion Cancelada");
@@ -36,19 +36,16 @@ function VentasEditar() {
             document.getElementById('fechaVenta').value = datos.fechaVenta;
             document.getElementById('fechaEntrega').value = datos.fechaEntrega;
             const info = await fetchRFQVenta(datos.RFC);
-            const filterData = info.filter(item => item.state == "Activo")
+            const filterData = info.filter(item => item.nuVenta == data)
             setRfq(filterData);
         }
-
 
         const getRFQ = async () => {
             const venta = localStorage.getItem('nuVenta');
             const data = await fetchRFQV(venta);
             const filterData = data.filter(item => item.state == "vendido")
             setRfq(filterData);
-
         }
-        
         getRFQ();
         getVentas();
 
@@ -58,8 +55,8 @@ function VentasEditar() {
 
 
     return (
-        <div>
-            <div className='h-screen bg-black overflow-y-auto  text-center mx-auto'>
+       
+            <div className='h-screen bg-black   text-center mx-auto'>
                 <h1 className='text-white text-3xl'>Editar Venta</h1>
 
                 <div className='mx-20 py-10 grid grid-cols-2 gap-y-8 gap-x-8   ' id='add'>
@@ -75,7 +72,7 @@ function VentasEditar() {
                     </div>
                     <div className='space-x-8'>
                         <label htmlFor="" className='text-white text-3xl'>Fecha de entrega :</label>
-                        <input id='fechaEntrega' className=' pl-3 rounded-lg w-72 h-10' type="date"  />
+                        <input id='fechaEntrega' className=' pl-3 rounded-lg w-72 h-10' type="date" />
                     </div>
                     <div className='space-x-8'>
                         <label htmlFor="" className='text-white text-3xl'>Subtotal :</label>
@@ -95,50 +92,50 @@ function VentasEditar() {
 
                     </div>
                 </div>
-                <div className='my-5 mx-10'>
+                <div className='my-5 mx-20'>
 
-<table className="table-auto w-full">
-    <thead>
-        <tr className="bg-yellow-500 h-10 ">
-            <th></th>
-            <th>N° RFQ</th>
-            <th>Pieza</th>
-            <th>Servicio</th>
-            <th>Total</th>
+                    <table className="table-auto w-full">
+                        <thead>
+                            <tr className="bg-yellow-500 h-10 ">
+                                
+                                <th>N° RFQ</th>
+                                <th>Pieza</th>
+                                <th>Servicio</th>
+                                <th>Total</th>
 
-        </tr>
-    </thead>
-    <tbody>
-        {rfq ?
-            rfq.map((item, index) =>
-                <tr key={item.Id_rfq} className='text-center'>
-                    <td></td>
-                    <td className="bg-white text-black">{item.Id_rfq}</td>
-                    <td className="bg-white text-black">{item.esPz.toString()}</td>
-                    <td className="bg-white text-black">{item.esMant.toString()}</td>
-                    <td className="bg-white text-black">{item.Total}</td>
-                </tr>
-            ) : <h1 className='text-white'>Selecciona una empresa o Empresa no tiene RFQ</h1>}
-    </tbody>
-</table>
-</div>
-                <div className=" flex justify-center mx-44 space-x-16 mt-5">
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {rfq ?
+                                rfq.map((item, index) =>
+                                    <tr key={item.Id_rfq} className='text-center'>
+                                      
+                                        <td className="bg-white text-black">{item.Id_rfq}</td>
+                                        <td className="bg-white text-black">{item.esPz.toString()}</td>
+                                        <td className="bg-white text-black">{item.esMant.toString()}</td>
+                                        <td className="bg-white text-black">{item.Total}</td>
+                                    </tr>
+                                ) : <h1 className='text-white'>Selecciona una empresa o Empresa no tiene RFQ</h1>}
+                        </tbody>
+                    </table>
+                </div>
+                <div className=" flex justify-center px-44 space-x-16 mt-5 bg-black">
                     <button className="bg-red-500 hover:bg-red-800 rounded-xl text-white font-bold w-44 h-16"
-                    onClick={cancel}
+                        onClick={cancel}
                     >
                         <h1 className="text-3xl" > Cancelar </h1>
                     </button>
                     <button
                         className="bg-amber-500 hover:bg-amber-800  rounded-xl text-white font-bold w-44 h-16"
-                    onClick={editVenta}
+                        onClick={editVenta}
                     >
                         <h1 className="text-3xl" > Guardar </h1>
                     </button>
                 </div>
 
             </div>
-            
-        </div>
+
+       
     )
 }
 

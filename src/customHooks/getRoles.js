@@ -22,6 +22,13 @@ export  async function fetchData ()  {
 
 export const  editR = async (selected, newRol) =>  {
     const db = getFirestore();
+        const rolesRefCheck = collection(db, "Roles");
+        const k = query(rolesRefCheck, where("cargo", "==", newRol));
+        const querySnapshots = await getDocs(k);
+        if(querySnapshots.size > 0 ) {
+            alert('El rol ya existe!!');
+            return false;
+        }
     const rolesRef = collection(db, "Roles");
     
         const q = query(rolesRef, where("cargo", "==", selected));

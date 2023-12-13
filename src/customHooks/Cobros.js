@@ -57,7 +57,7 @@ export async function addCobro(data) {
     }
 }
 
-export const fetchCobros = async() => {
+export const fetchCobros = async () => {
     try {
         const db = getFirestore();
         const optionsRef = collection(db, "Cobro"); // Reemplaza "opciones" con el nombre de tu colección
@@ -72,5 +72,74 @@ export const fetchCobros = async() => {
         return optionsData;
     } catch (error) {
         console.error("Error al obtener datos de Firebase:", error);
+    }
+}
+export const fetchCobro = async (cobro) => {
+    try {
+        const db = getFirestore();
+        const optionsRef = collection(db, "Cobro"); // Reemplaza "opciones" con el nombre de tu colección
+        const q = query(optionsRef, where("nuCobro", "==", cobro));
+        const querySnapshot = await getDocs(q);
+
+        let optionsData;
+        querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            optionsData = data; // Ajusta según la estructura de tus documentos
+        });
+
+        return optionsData;
+    } catch (error) {
+        console.error("Error al obtener datos de Firebase:", error);
+        
+        return false;
+    }
+}
+
+export const editarCobros = async (data) => {
+    const db = getFirestore();
+    const collectionRef = collection(db, 'Cobro');
+    // Realiza una consulta para buscar el documento con el atributo "nombre" igual a "Ejemplo"
+    const q = query(collectionRef, where("nuCobro", "==", data.nuCobro));
+    const collectionRefV = collection(db, 'Ventas');
+    const o = query(collectionRefV, where("nuVenta", "==", parseInt(data.nuVenta)));
+    console.log(data.nuVenta)
+    try {
+        const querySnapshot = await getDocs(q);
+        const querySnapshotV = await getDocs(o);
+        if(querySnapshotV.size == 0){
+            console.log("sin docs");
+            return;
+        }
+        console.log(data.saldo)
+        querySnapshotV.forEach(async (queryDocumentSnapshot) => {
+            const docRef = doc(collectionRefV, queryDocumentSnapshot.id);
+
+            // Realiza la actualización del atributo del documento
+            const updateData = {
+                saldo: parseInt(data.saldo)
+            };
+            await updateDoc(docRef, updateData);
+        })
+        if (querySnapshot.size === 0) {
+            return false;
+        } else {
+            querySnapshot.forEach(async (queryDocumentSnapshot) => {
+                const docRef = doc(collectionRef, queryDocumentSnapshot.id);
+                // Realiza la actualización del atributo del documento
+                const updateData = {
+                    rastreo : data.rastreo,
+                    monto : data.monto,
+                    fecha: data.fecha,
+                    saldo : data.saldo
+                };
+                await updateDoc(docRef, updateData);
+                
+            })
+
+        }
+        return true;
+
+    } catch (error) {
+        return false;
     }
 }

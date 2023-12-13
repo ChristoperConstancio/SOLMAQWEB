@@ -11,7 +11,6 @@ function VentasView() {
         const getRFQ = async () => {
             const venta = localStorage.getItem('nuVenta');
             const data = await fetchRFQV(venta);
-            console.log(data)
             const filterData = data.filter(item => item.state == "vendido")
             setRfq(filterData);
 
@@ -51,15 +50,7 @@ function VentasView() {
                 <input className='pl-2 rounded-lg w-32 bg-slate-400 text-black' type="text" readOnly id='fechaEntregaInput' />
 
             </div>
-            <div className='flex justify-center items-center space-x-5 '>
 
-                <button >
-                    <div className='bg-red-500 rounded-xl w-10 flex justify-center h-10 items-center'>
-                        <img src={remove} alt="" className='w-4 h-4' />
-                    </div>
-                </button>
-
-            </div>
             <div className='my-5 mx-10'>
 
                 <table className="table-auto w-full">

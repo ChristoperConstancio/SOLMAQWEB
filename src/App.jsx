@@ -26,6 +26,7 @@ import Cobros from './components/Cobros/Cobros';
 import AgregarCobro from './components/Cobros/AgregarCobro';
 import CobrosView from './components/Cobros/CobrosView';
 import ReportesS from './components/Reportes/ReportesS';
+import EditarCobros from './components/Cobros/EditarCobros';
 function App() {
 
   const userVerificado = localStorage.getItem('verificado');
@@ -83,6 +84,12 @@ function App() {
           )} />
           <Route path="/Cobros" element={tipoUsuario === '1' ? (
           <><Header /><Cobros /></>
+        ) :
+          (
+            <Bienvenido />
+          )} />
+          <Route path="/EditarCobros" element={tipoUsuario === '1' ? (
+          <><Header /><EditarCobros /></>
         ) :
           (
             <Bienvenido />
