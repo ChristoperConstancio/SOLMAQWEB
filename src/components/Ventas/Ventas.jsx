@@ -16,6 +16,8 @@ function Ventas() {
     const [selectedRow, setSelectedRow] = useState()
     const navigate = useNavigate();
     const [verPDF, setVerPDF] = useState(false)
+    const [buttons, setButtonsState] = useState(false)
+
     const filter = (e) => {
         setFilteredData(vtas.filter(item => {
             return item.RFC == e.target.value;
@@ -74,6 +76,13 @@ function Ventas() {
             const ventas = await getVentasAll();
             setVtas(ventas)
         }
+        const setButtons = () => {
+            const tipoUsuario = localStorage.getItem('tipo');
+            if (tipoUsuario == '1' || tipoUsuario == '2') {
+                setButtonsState(true);
+            }
+        }
+        setButtons();
         getCustomers();
         getVentas();
     }, [])
@@ -101,23 +110,28 @@ function Ventas() {
 
                 </div>
             </div>
-            <div className='flex justify-end mx-10 space-x-3 h-10 '>
 
-                <button onClick={modify}>
-                    <div className='bg-amber-400 rounded-xl w-10 flex justify-center h-full items-center'>
-                        <img src={edit} alt="" className='h-4 w-4' />
+            <div className='flex justify-end mx-10 space-x-3 h-10 '>
+                {buttons ?
+                    <div>
+                        <button onClick={modify}>
+                            <div className='bg-amber-400 rounded-xl w-10 flex justify-center h-full items-center'>
+                                <img src={edit} alt="" className='h-4 w-4' />
+                            </div>
+                        </button>
+                        <Link to={'/AgregarVenta'}>
+                            <div className='bg-green-400 rounded-xl w-10 flex justify-center h-full items-center'>
+                                <img src={add} alt="" className='h-4 w-4' />
+                            </div>
+                        </Link>
+                        <button onClick={inactivateVentas} >
+                            <div className='bg-red-400 rounded-xl w-10 flex justify-center h-full items-center'>
+                                <img src={remove} alt="" className='w-4 h-4' />
+                            </div>
+                        </button>
                     </div>
-                </button>
-                <Link to={'/AgregarVenta'}>
-                    <div className='bg-green-400 rounded-xl w-10 flex justify-center h-full items-center'>
-                        <img src={add} alt="" className='h-4 w-4' />
-                    </div>
-                </Link>
-                <button onClick={inactivateVentas} >
-                    <div className='bg-red-400 rounded-xl w-10 flex justify-center h-full items-center'>
-                        <img src={remove} alt="" className='w-4 h-4' />
-                    </div>
-                </button>
+
+                    : <h1> </h1>}
 
                 <button
                     onClick={viewVentas}>
@@ -125,7 +139,9 @@ function Ventas() {
                         <img src={view} alt="" className='w-7 h-7' />
                     </div>
                 </button>
+
             </div>
+
             <div className='my-5 mx-10'>
                 <table className="table-auto w-full">
                     <thead>

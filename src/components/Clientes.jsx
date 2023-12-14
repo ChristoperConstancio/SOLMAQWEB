@@ -13,6 +13,7 @@ export default function Clientes() {
     const [selectedRow, setSelectedRow] = useState(null);
     const [data, setData] = useState([]);
     const target = document.getElementById('targetSearch');
+    const [buttons, setButtonsState] = useState(false)
     const navigate = useNavigate();
     const modifyCustomer = () => {
         if (selectedRow == null) {
@@ -54,7 +55,7 @@ export default function Clientes() {
     const filter = () => {
         // Aplicar el filtro a la copia de los datos originales
         const filtered = data.filter((item) => {
-         
+
             return item.Razonsocial === target.value;
         });
 
@@ -88,8 +89,14 @@ export default function Clientes() {
             }
 
         }
+        const setButtons = () => {
+            const tipoUsuario = localStorage.getItem('tipo');
+            if (tipoUsuario == '1' || tipoUsuario == '2') {
+                setButtonsState(true);
+            }
+        }
         searchT();
-
+        setButtons();
 
     }, [])
 
@@ -114,24 +121,26 @@ export default function Clientes() {
                             <img src={loupe} alt="" className=' h-7 w-7 rounded-lg' />
                         </button>
                     </div>
-
-                    <div className='flex h-6 space-x-3 ml-16'>
-                        <Link to={'/AgregarCliente'}>
-                            <div className='bg-green-400 rounded-xl w-10 flex justify-center h-full items-center'>
-                                <img src={add} alt="" className='h-4 w-4' />
-                            </div>
-                        </Link>
-                        <button onClick={modifyCustomer}>
-                            <div className='bg-amber-400 rounded-xl w-10 flex justify-center h-full items-center'>
-                                <img src={edit} alt="" className='h-4 w-4' />
-                            </div>
-                        </button>
-                        <button onClick={inactivateclient}>
-                            <div className='bg-red-400 rounded-xl w-10 flex justify-center h-full items-center'>
-                                <img src={remove} alt="" className='w-4 h-4' />
-                            </div>
-                        </button>
-                    </div>
+                    {buttons ?
+                        <div className='flex h-6 space-x-3 ml-16'>
+                            <Link to={'/AgregarCliente'}>
+                                <div className='bg-green-400 rounded-xl w-10 flex justify-center h-full items-center'>
+                                    <img src={add} alt="" className='h-4 w-4' />
+                                </div>
+                            </Link>
+                            <button onClick={modifyCustomer}>
+                                <div className='bg-amber-400 rounded-xl w-10 flex justify-center h-full items-center'>
+                                    <img src={edit} alt="" className='h-4 w-4' />
+                                </div>
+                            </button>
+                            <button onClick={inactivateclient}>
+                                <div className='bg-red-400 rounded-xl w-10 flex justify-center h-full items-center'>
+                                    <img src={remove} alt="" className='w-4 h-4' />
+                                </div>
+                            </button>
+                        </div>
+                        : <h1></h1>
+                    }
                 </div>
             </div>
             <div className="bg-black text-black p-4 h-screen">

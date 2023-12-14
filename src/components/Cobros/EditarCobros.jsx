@@ -29,8 +29,7 @@ function EditarCobros() {
     const handleInputChange = () => {
         const x = document.getElementById('monto').value;
         const confirmar = document.getElementById('confirmar').value;
-        console.log(x)
-        console.log(confirmar)
+        
 
         if (x == confirmar) {
             const cantidad = parseInt(data.total) - parseInt(x);

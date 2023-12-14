@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import userImg from '../assets/user.png'
 import padLock from '../assets/padlock.png'
 import showOff from '../assets/show.png'
@@ -34,11 +34,13 @@ function Login() {
       alert(nombre)
     }
   }
-
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
 
+
+  
+  
   return (
 
     <div className='flex justify-center items-center bg-black min-h-screen'>

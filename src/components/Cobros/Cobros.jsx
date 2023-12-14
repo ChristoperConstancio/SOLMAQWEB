@@ -12,6 +12,8 @@ function Cobros() {
     const [filteredData, setFilteredData] = useState()
     const [vtas, setVtas] = useState([])
     const [selectedRow, setSelectedRow] = useState()
+    const [buttons, setButtonsState] = useState(false)
+
     const navigate = useNavigate();
     const filter = (e) => {
         setFilteredData(vtas.filter(item => {
@@ -65,6 +67,13 @@ function Cobros() {
             const ventas = await getVentasAll();
             setVtas(ventas)
         }
+        const setButtons = () => {
+            const tipoUsuario = localStorage.getItem('tipo');
+            if (tipoUsuario == '1' || tipoUsuario == '2') {
+                setButtonsState(true);
+            }
+        }
+        setButtons();
         getCustomers();
         getVentas();
     }, [])
@@ -97,19 +106,23 @@ function Cobros() {
 
                 </div>
             </div>
+
             <div className='flex justify-end mx-10 space-x-3 h-10 '>
-                
-                <button
-                    onClick={addCobro}>
-                    <div className='bg-green-400 rounded-xl w-10 flex justify-center h-full items-center'>
-                        <img src={add} alt="" className='h-4 w-4' />
+                {buttons ?
+                    <div>
+                        <button
+                            onClick={addCobro}>
+                            <div className='bg-green-400 rounded-xl w-10 flex justify-center h-full items-center'>
+                                <img src={add} alt="" className='h-4 w-4' />
+                            </div>
+                        </button>
+                        <button onClick={inactivateVentas} >
+                            <div className='bg-red-400 rounded-xl w-10 flex justify-center h-full items-center'>
+                                <img src={remove} alt="" className='w-4 h-4' />
+                            </div>
+                        </button>
                     </div>
-                </button>
-                <button onClick={inactivateVentas} >
-                    <div className='bg-red-400 rounded-xl w-10 flex justify-center h-full items-center'>
-                        <img src={remove} alt="" className='w-4 h-4' />
-                    </div>
-                </button>
+                    : <h1></h1>}
                 <button
                     onClick={viewVentas}>
                     <div className='bg-indigo-700 rounded-xl w-10 flex justify-center h-full items-center'>
@@ -117,6 +130,7 @@ function Cobros() {
                     </div>
                 </button>
             </div>
+
             <div className='my-5 mx-10'>
                 <table className="table-auto w-full">
                     <thead>

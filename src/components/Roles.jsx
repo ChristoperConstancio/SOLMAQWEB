@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { getFirestore, collection, getDocs, addDoc,query, where, doc, updateDoc } from "firebase/firestore";
-import {editR, fetchData} from '../customHooks/getRoles';
+import { getFirestore, collection, getDocs, addDoc, query, where, doc, updateDoc } from "firebase/firestore";
+import { editR, fetchData, sellCodeRoles } from '../customHooks/getRoles';
 function Roles() {
 
     const [options, setOptions] = useState([]);
@@ -10,11 +10,22 @@ function Roles() {
     const roledit = document.getElementById('roledit');
 
     const addRol = async () => {
+        const newRol = rolnew.value.toUpperCase();
+        const check = options.some(item => {
+            if(item.cargo.toUpperCase() == newRol){
+                return true;
+            }
+        })
+        if (check) {
+            alert("El rol ya existe!")
+            return;
+        }
+        const id = await sellCodeRoles();
         const db = getFirestore();
         const rolesRef = collection(db, "Roles");
         const q = query(rolesRef, where("cargo", "==", rolnew.value));
         const querySnapshot = await getDocs(q);
-        if(querySnapshot.size > 0 ) {
+        if (querySnapshot.size > 0) {
             alert('El rol ya existe!!');
             return false;
         }
@@ -23,7 +34,8 @@ function Roles() {
         } else {
             try {
                 await addDoc(rolesRef, {
-                    cargo: rolnew.value
+                    cargo: rolnew.value,
+                    id
                 });
                 alert('Rol Creado')
                 rolnew.value = '';
@@ -33,26 +45,28 @@ function Roles() {
         }
     }
     const editRol = async () => {
-       const newRol = roledit.value.toUpperCase();
-       const check = options.some(item => {
-        item.cargo.toUpperCase() == newRol;
-        console.log(item.cargo.toUpperCase()+ " , " + newRol)
-       })
-       if(check){
-        alert("El rol ya existe!")
-       }else{
-        const editing  = await editR(selectedOption, roledit.value);
-        if(editing){
-            alert("Actualizacion exitosa");
-        }else{
-            alert("Ocurrio un problema, intentalo de nuevo")
+        const newRol = roledit.value.toUpperCase();
+        const check = options.some(item => {
+            if(item.cargo.toUpperCase() == newRol){
+                return true;
+            }
+        })
+        if (check) {
+            alert("El rol ya existe!")
+            return;
+        } else {
+            const editing = await editR(selectedOption, roledit.value);
+            if (editing) {
+                alert("Actualizacion exitosa");
+            } else {
+                alert("Ocurrio un problema, intentalo de nuevo")
+            }
         }
-       }
     }
 
-    
- 
-    
+
+
+
 
     const changeInter = () => {
         const divAdd = document.getElementById('addRol')
@@ -81,19 +95,19 @@ function Roles() {
         obtenerDatos();
 
     }, [])
-    
+
     return (
         <div className='h-screen bg-black'>
-             <div className='text-center'>
+            <div className='text-center'>
                 <h1 className='text-white font-bold text-4xl'>Gestionar Roles</h1>
             </div>
             <div className='px-52 pt-10'>
-            <table className="table-auto w-full">
+                <table className="table-auto w-full">
                     <thead>
                         <tr className="bg-yellow-500 h-10 ">
                             <th></th>
                             <th>Cargo</th>
-                           
+
                         </tr>
                     </thead>
                     <tbody>
@@ -101,7 +115,7 @@ function Roles() {
                             filteredData
                                 .map((item, index) =>
                                     <tr key={item.nombreUsuario} className='text-center'>
-                                        
+
 
                                         <td className="bg-white text-black">{index}</td>
                                         <td className="bg-white text-black">{item.cargo}</td>
@@ -114,7 +128,7 @@ function Roles() {
                     </tbody>
                 </table>
             </div>
-           
+
             <div className='text-center mt-10 space-x-7'>
                 <button
                     className='bg-green-500 w-32 rounded-lg h-16 text-white font-bold hover:bg-green-800'

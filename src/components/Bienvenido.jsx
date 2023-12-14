@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
-
+import Usuarios from '../assets/Usuarios.png'
 function Bienvenido() {
   const [apartments, setApartments] = useState({})
   const [tipoUsuarioName, setTipoUsuarioName] = useState()
@@ -13,8 +13,24 @@ function Bienvenido() {
         setApartments(['Usuarios', 'Ventas', 'RFQ', 'Clientes', 'Cobros', 'Reportes']);
         setTipoUsuarioName("Administrador")
       }
+      if (tipoUsuario == '2') {
+        setApartments(['Ventas', 'RFQ', 'Clientes', 'Cobros', 'Reportes']);
+        setTipoUsuarioName("Coordinador")
+      }
+      if (tipoUsuario != '2' && tipoUsuario != '1') {
+        setApartments(['Ventas', 'RFQ', 'Clientes', 'Cobros', 'Reportes']);
+        setTipoUsuarioName("SOLMAQWEB")
+      }
     }
 
+    const checkUser = () => {
+      const userVerificad = localStorage.getItem('verificado');
+      if (userVerificad == 'false') {
+        window.location.reload()
+      }
+
+    }
+    checkUser();
     interfaz();
   }, [])
 

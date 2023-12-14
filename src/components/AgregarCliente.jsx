@@ -91,7 +91,7 @@ export default function AgregarCliente() {
                     </div>
                     <div className='space-x-5 flex  items-center'>
                         <h1 className="text-white text-3xl">Telefono : </h1>
-                        <input type="text"
+                        <input type="number"
                             id='telefono'
                             className='bg-slate-300 w-80 rounded-lg h-10 pl-3'
                         />

@@ -53,3 +53,28 @@ export const  editR = async (selected, newRol) =>  {
         }   
     
 }
+
+export async function sellCodeRoles() {
+    try {
+        const db = getFirestore();
+
+        const pzRef = collection(db, "Roles"); // Reemplaza "opciones" con el nombre de tu colección
+        const querySnapshot = await getDocs(pzRef);
+
+        let maxId = 0;
+
+        querySnapshot.forEach((doc) => {
+            const datos = doc.data();
+            const id = parseInt(datos.id, 10);
+            if (id > maxId) {
+                maxId = id;
+            }
+        });
+
+
+        // Establecer el próximo ID disponible
+        return maxId + 1;
+    } catch (error) {
+        console.error('Error al obtener el máximo ID:', error);
+    }
+};

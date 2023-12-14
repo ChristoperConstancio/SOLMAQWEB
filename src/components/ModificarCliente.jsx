@@ -12,8 +12,7 @@ export default function ModificarCliente() {
         Direccion: '',
         Contacto: '',
         Correo: '',
-        Telefono: '',
-        Status: ''
+        Telefono: ''
     })
     const cancelAction = (e) => {
         e.preventDefault();
@@ -28,6 +27,7 @@ export default function ModificarCliente() {
          alert("Actualizacion NO Exitosa")
         }else{
             alert("Actualizacion Exitosa!!")
+            navigate('/Clientes')
         }
         
     }
@@ -52,17 +52,16 @@ export default function ModificarCliente() {
                 Direccion,
                 Contacto,
                 Correo,
-                Telefono,
-                Status
+                Telefono
             })
         }
         updateUser();
     }, []);
     return (
-        <div className='h-screen bg-black space-y-8 w-max'>
+        <div className='h-screen bg-black space-y-8 '>
             <h1 className='font-bold text-white text-3xl text-center'>Editar Cliente</h1>
             <form action="click">
-                <div className='grid grid-rows-3 grid-cols-2 items-center justify-center  mx-20 gap-y-8 w-screen' >
+                <div className='grid grid-rows-3 grid-cols-2 items-center justify-center  mx-20 gap-y-8 ' >
 
                     <div className='space-x-10 flex '>
                         <h1 className="text-white text-3xl">Razon Social: </h1>
@@ -100,19 +99,7 @@ export default function ModificarCliente() {
 
                         />
                     </div>
-                    <div className='space-x-4 flex'>
-                        <h1 className="text-white text-3xl">Status: </h1>
-                        <select
-                            id='status'
-                            name='Status'
-                            className="bg-slate-300 rounded-lg w-60 h-10 placeholder-black"
-                            onChange={handleInputChange}
-
-                        >
-                            <option >{data.Status}</option>
-                            <option value="inactivo"> Inactivo</option>
-                        </select>
-                    </div>
+                   
                     <div className='space-x-4 flex'>
                         <h1 className="text-white text-3xl">Contacto: </h1>
 
@@ -140,7 +127,7 @@ export default function ModificarCliente() {
                     </div>
                     <div className='space-x-5 flex  items-center'>
                         <h1 className="text-white text-3xl">Telefono : </h1>
-                        <input type="text"
+                        <input type="number"
                             id='telefono'
                             name='Telefono'
                             className='bg-slate-300 w-80 rounded-lg h-10 pl-3 placeholder-black'

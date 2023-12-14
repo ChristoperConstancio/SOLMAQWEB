@@ -14,6 +14,8 @@ function RFQ() {
     const [selectedRow, setSelectedRow] = useState()
     const [optionsCustomer, setOptionsCustomer] = useState([])
     const [rfqSelected, setRfqSelected] = useState()
+    const [buttons, setButtonsState] = useState(false)
+
     const toggleCheckbox = (id) => {
         const { Id_rfq, esMant, RFC, Total} = id
         localStorage.setItem('razon',RFC)
@@ -72,6 +74,13 @@ function RFQ() {
             const customers = await getClientes();
             setOptionsCustomer(customers)
         }
+        const setButtons = () => {
+            const tipoUsuario = localStorage.getItem('tipo');
+            if (tipoUsuario == '1' || tipoUsuario == '2') {
+                setButtonsState(true);
+            }
+        }
+        setButtons();
         getRFQ();
         getCustomers();
     }, [])
@@ -100,7 +109,8 @@ function RFQ() {
                         </select>
                     </div>
                 </div>
-                <div className='flex justify-end mx-10 space-x-3 h-10 '>
+                {buttons ? 
+                <div classname='flex justify-end mx-10 space-x-3 h-10 '>
                     <Link to={'/AgregarRFQ'}>
                         <div className='bg-green-400 rounded-xl w-10 flex justify-center h-full items-center'>
                             <img src={add} alt="" className='h-4 w-4' />
@@ -118,6 +128,7 @@ function RFQ() {
                         </div>
                     </button>
                 </div>
+                : <h1></h1>}
                 <div className='my-5 mx-10'>
                     <table className="table-auto w-full">
                         <thead>

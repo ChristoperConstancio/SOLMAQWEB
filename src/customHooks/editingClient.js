@@ -22,7 +22,6 @@ export default async function editingClient(id, data) {
               Razonsocial: data.Razonsocial,
               RFC: data.RFC,
               Direccion: data.Direccion,
-              Status: data.Status,
               Contacto: data.Contacto,
               Correo: data.Correo,
               Telefono : data.Telefono

@@ -52,7 +52,7 @@ export const checkUser = async (username) => {
     if (db) {
       // Verifica si el usuario existe en la colección de usuarios en Firestore
       const usersRef = collection(db, "Usuarios");
-      const q = query(usersRef, where("nombreUsuario", "==", username.value));
+      const q = query(usersRef, where("nombreUsuario", "==", username));
       const querySnapshot = await getDocs(q);
 
       if (querySnapshot.size === 0) {

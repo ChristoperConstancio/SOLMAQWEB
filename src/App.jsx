@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './components/Login';
 import Header from './components/Header';
@@ -27,172 +27,196 @@ import AgregarCobro from './components/Cobros/AgregarCobro';
 import CobrosView from './components/Cobros/CobrosView';
 import ReportesS from './components/Reportes/ReportesS';
 import EditarCobros from './components/Cobros/EditarCobros';
+import Error from './components/Error';
+import HeaderB from './components/HeaderB';
 function App() {
+// Definir las variables de estado para las variables del localStorage
+const [userVerificado, setUserVerificado] = useState(null);
+const [tipoUsuario, setTipoUsuario] = useState(null);
 
-  const userVerificado = localStorage.getItem('verificado');
-  const tipoUsuario = localStorage.getItem('tipo');
+useEffect(() => {
+  // Obtén las variables del localStorage después del login
+  const userVerificadoLocalStorage = localStorage.getItem('verificado');
+  const tipoUsuarioLocalStorage = localStorage.getItem('tipo');
+
+  // Actualiza el estado con las variables obtenidas
+  setUserVerificado(userVerificadoLocalStorage);
+  setTipoUsuario(tipoUsuarioLocalStorage);
+    // Puedes realizar otras acciones aquí según las variables obtenidas
+  }, []);
+  
   return (
     <Router>
 
       <Routes>
         <Route path='/' element={<Login />} />
-        <Route path="/bienvenido" element={userVerificado === 'true' ? (
-          <><Header /><Bienvenido /></>
+        
+        <Route path="/*" element={userVerificado == 'false' ? (
+          <Error />
+
         ) :
           (
-            <Bienvenido />
+            <>
+            <Header/><Bienvenido/>
+            </>
+          )} />
+        <Route path="/bienvenido" element={userVerificado == 'true' ? (
+          <><HeaderB /><Bienvenido /></>
+        ) :
+          (
+            <Error  />
 
           )} />
-        <Route path="/Usuarios" element={tipoUsuario === '1' ? (
+        <Route path="/Usuarios" element={tipoUsuario === '1' && userVerificado == 'true' ? (
           <><Header /><Usuarios /></>
         ) :
           (
-            <Bienvenido />
+            <Error />
           )} />
-          <Route path="/Ventas" element={tipoUsuario === '1' ? (
+        <Route path="/Ventas" element={ userVerificado == 'true' ? (
           <><Header /><Ventas /></>
         ) :
           (
-            <Bienvenido />
-            
+            <Error />
+
           )} />
-          <Route path="/CobrosView" element={tipoUsuario === '1' ? (
+        <Route path="/CobrosView" element={ userVerificado == 'true' ? (
           <><Header /><CobrosView /></>
         ) :
           (
-            <Bienvenido />
-            
+            <Error />
+
           )} />
-           <Route path="/Reportes" element={tipoUsuario === '1' ? (
+        <Route path="/Reportes" element={ userVerificado === 'true' ? (
           <><Header /><ReportesS /></>
         ) :
           (
-            <Bienvenido />
-            
+            <Error />
+
           )} />
-          <Route path="/VentasView" element={tipoUsuario === '1' ? (
+        <Route path="/VentasView" element={ userVerificado === 'true' ? (
           <><Header /><VentasView /></>
         ) :
           (
-            <Bienvenido />
+            <Error />
           )} />
-           <Route path="/AgregarCobro" element={tipoUsuario === '1' ? (
+        <Route path="/AgregarCobro" element={(tipoUsuario === '1' || tipoUsuario === '2') && userVerificado === 'true' ? (
           <><Header /><AgregarCobro /></>
         ) :
           (
-            <Bienvenido />
+            <Error />
           )} />
-          <Route path="/Cobros" element={tipoUsuario === '1' ? (
+        <Route path="/Cobros" element={userVerificado === 'true' ? (
           <><Header /><Cobros /></>
         ) :
           (
-            <Bienvenido />
+            <Error />
           )} />
-          <Route path="/EditarCobros" element={tipoUsuario === '1' ? (
+        <Route path="/EditarCobros" element={(tipoUsuario === '1' || tipoUsuario === '2') && userVerificado === 'true' ? (
           <><Header /><EditarCobros /></>
         ) :
           (
-            <Bienvenido />
+            <Error />
           )} />
-          <Route path="/VentasEditar" element={tipoUsuario === '1' ? (
+        <Route path="/VentasEditar" element={(tipoUsuario === '1' || tipoUsuario === '2') && userVerificado === 'true' ? (
           <><Header /><VentasEditar /></>
         ) :
           (
-            <Bienvenido />
+            <Error />
           )} />
-          <Route path="/AgregarVenta" element={tipoUsuario === '1' ? (
+        <Route path="/AgregarVenta" element={(tipoUsuario === '1' || tipoUsuario === '2') && userVerificado === 'true' ? (
           <><Header /><AgregarVenta /></>
         ) :
           (
-            <Bienvenido />
+            <Error />
           )} />
-        <Route path="/AgregarUsuario" element={tipoUsuario === '1' ? (
+        <Route path="/AgregarUsuario" element={(tipoUsuario === '1' || tipoUsuario === '2') && userVerificado === 'true' ? (
           <><Header /><AgregarUsuario /></>
         ) :
           (
-            <Bienvenido />
+            <Error />
           )} />
-        <Route path="/EditarUsuario" element={tipoUsuario === '1' ? (
+        <Route path="/EditarUsuario" element={(tipoUsuario === '1' || tipoUsuario === '2') && userVerificado === 'true' ? (
           <><Header /><EditarUsuario /></>
         ) :
           (
-            <Bienvenido />
+            <Error />
           )} />
-        <Route path="/Roles" element={tipoUsuario === '1' ? (
+        <Route path="/Roles" element={(tipoUsuario === '1' || tipoUsuario === '2') && userVerificado === 'true' ? (
           <><Header /><Roles /></>
         ) :
           (
-            <Bienvenido />
+            <Error />
           )} />
-        <Route path="/Clientes" element={tipoUsuario === '1' ? (
+        <Route path="/Clientes" element={userVerificado === 'true' ? (
           <><Header /><Clientes /></>
         ) :
           (
-            <Bienvenido />
+            <Error />
           )} />
-        <Route path="/AgregarCliente" element={tipoUsuario === '1' ? (
+        <Route path="/AgregarCliente" element={(tipoUsuario === '1' || tipoUsuario === '2') && userVerificado === 'true' ? (
           <><Header /><AgregarCliente /></>
         ) :
           (
-            <Bienvenido />
+            <Error />
           )} />
-        <Route path="/ModificarCliente" element={tipoUsuario === '1' ? (
+        <Route path="/ModificarCliente" element={(tipoUsuario === '1' || tipoUsuario === '2') && userVerificado === 'true' ? (
           <><Header /><ModificarCliente /></>
         ) :
           (
-            <Bienvenido />
+            <Error />
           )} />
-          <Route path="/RFQ" element={tipoUsuario === '1' ? (
+        <Route path="/RFQ" element={userVerificado === 'true' ? (
           <><Header /><RFQ /></>
         ) :
           (
-            <Bienvenido />
+            <Error />
           )} />
-          <Route path="/AgregarRFQ" element={tipoUsuario === '1' ? (
+        <Route path="/AgregarRFQ" element={(tipoUsuario === '1' || tipoUsuario === '2') && userVerificado === 'true' ? (
           <><Header /><AgregarRFQ /></>
         ) :
           (
-            <Bienvenido />
+            <Error />
           )} />
-           <Route path="/RFQServicio" element={tipoUsuario === '1' ? (
+        <Route path="/RFQServicio" element={(tipoUsuario === '1' || tipoUsuario === '2') && userVerificado === 'true' ? (
           <><Header /><RFQServicio /></>
         ) :
           (
-            <Bienvenido />
+            <Error />
           )} />
-          <Route path="/RFQPiezas" element={tipoUsuario === '1' ? (
+        <Route path="/RFQPiezas" element={(tipoUsuario === '1' || tipoUsuario === '2') && userVerificado === 'true' ? (
           <><Header /><RFQPiezas /></>
         ) :
           (
-            <Bienvenido />
+            <Error />
           )} />
-           <Route path="/RFQPiezasView" element={tipoUsuario === '1' ? (
+        <Route path="/RFQPiezasView" element={(tipoUsuario === '1' || tipoUsuario === '2') && userVerificado === 'true' ? (
           <><Header /><RFQPiezasView /></>
         ) :
           (
-            <Bienvenido />
+            <Error />
           )} />
-          <Route path="/RFQPiezasEditar" element={tipoUsuario === '1' ? (
+        <Route path="/RFQPiezasEditar" element={(tipoUsuario === '1' || tipoUsuario === '2') && userVerificado === 'true' ? (
           <><Header /><RFQPiezasEditar /></>
         ) :
           (
-            <Bienvenido />
+            <Error />
           )
-          } />
-          <Route path="/RFQServicioView" element={tipoUsuario === '1' ? (
+        } />
+        <Route path="/RFQServicioView" element={(tipoUsuario === '1' || tipoUsuario === '2') && userVerificado === 'true' ? (
           <><Header /><RFQServicioView /></>
         ) :
           (
-            <Bienvenido />
+            <Error />
           )
-          } />
-          <Route path="/RFQServicioEditar" element={tipoUsuario === '1' ? (
+        } />
+        <Route path="/RFQServicioEditar" element={(tipoUsuario === '1' || tipoUsuario === '2') && userVerificado === 'true' ? (
           <><Header /><RFQServicioEditar /></>
         ) :
           (
-            <Bienvenido />
+            <Error />
           )
-          } />
+        } />
       </Routes>
     </Router>
   );
