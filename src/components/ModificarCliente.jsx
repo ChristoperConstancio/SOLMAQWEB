@@ -69,7 +69,7 @@ export default function ModificarCliente() {
                             id='razonsocial'
                             name='Razonsocial'
                             className='bg-slate-300 w-80 rounded-lg h-10 pl-3 placeholder-black'
-                            placeholder={data.Razonsocial}
+                            value={data.Razonsocial}
                             onChange={handleInputChange}
 
                         />
@@ -81,9 +81,9 @@ export default function ModificarCliente() {
                             id='rfc'
                             name='RFC'
                             className='bg-slate-300 w-80 rounded-lg h-10 pl-3 placeholder-black'
-                            placeholder={data.RFC}
+                            value={data.RFC}
                             onChange={handleInputChange}
-
+                            readOnly
                         />
                     </div>
                     <div className='space-x-5 flex  items-center'>
@@ -93,7 +93,7 @@ export default function ModificarCliente() {
                             id='direccion'
                             name='Direccion'
                             className='bg-slate-300 w-80 rounded-lg h-10 pl-3 placeholder-black'
-                            placeholder={data.Direccion}
+                            value={data.Direccion}
                             onChange={handleInputChange}
 
 
@@ -107,7 +107,7 @@ export default function ModificarCliente() {
                             id='contacto'
                             name='Contacto'
                             className='bg-slate-300 w-80 rounded-lg h-10 pl-3 placeholder-black'
-                            placeholder={data.Contacto}
+                            value={data.Contacto}
                             onChange={handleInputChange}
 
 
@@ -119,7 +119,7 @@ export default function ModificarCliente() {
                             id='correo'
                             name='Correo'
                             className='bg-slate-300 w-80 rounded-lg h-10 pl-3 placeholder-black'
-                            placeholder={data.Correo}
+                            value={data.Correo}
                             onChange={handleInputChange}
 
 
@@ -131,7 +131,7 @@ export default function ModificarCliente() {
                             id='telefono'
                             name='Telefono'
                             className='bg-slate-300 w-80 rounded-lg h-10 pl-3 placeholder-black'
-                            placeholder={data.Telefono}
+                            value={data.Telefono}
                             onChange={handleInputChange}
 
 

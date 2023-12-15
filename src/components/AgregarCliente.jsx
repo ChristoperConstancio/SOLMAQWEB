@@ -48,17 +48,17 @@ export default function AgregarCliente() {
     return (
         <div className='h-screen bg-black space-y-8 px-20'>
             <h1 className='font-bold text-white text-3xl text-center'>Agregar Cliente</h1>
-            <form action="click">
-                <div className='grid grid-rows-3 grid-cols-2 items-center justify-center  mx-20 space-y-10 ' >
+            <form>
+                <div className='grid grid-rows-3 grid-cols-2 items-center mx-5 space-y-10 ' >
 
-                    <div className='space-x-10 flex '>
-                        <h1 className="text-white text-3xl">Razon social: </h1>
+                    <div className='space-x-5 flex '>
+                        <h1 className="text-white text-3xl">Razon Social: </h1>
                         <input type="text"
                             id='razonsocial'
                             className='bg-slate-300 w-80 rounded-lg h-10 pl-3'
                         />
                     </div>
-                    <div className='space-x-5 flex  items-center'>
+                    <div className='space-x-5 flex '>
                         <h1 className="text-white text-3xl">RFC : </h1>
 
                         <input type="text"

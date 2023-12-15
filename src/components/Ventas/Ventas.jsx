@@ -113,9 +113,9 @@ function Ventas() {
 
             <div className='flex justify-end mx-10 space-x-3 h-10 '>
                 {buttons ?
-                    <div>
+                    <div className='flex h-10 space-x-3'>
                         <button onClick={modify}>
-                            <div className='bg-amber-400 rounded-xl w-10 flex justify-center h-full items-center'>
+                            <div className='bg-amber-400 rounded-xl w-10  flex justify-center h-full items-center'>
                                 <img src={edit} alt="" className='h-4 w-4' />
                             </div>
                         </button>

@@ -109,7 +109,7 @@ function Cobros() {
 
             <div className='flex justify-end mx-10 space-x-3 h-10 '>
                 {buttons ?
-                    <div>
+                    <div className='flex h-10 space-x-3'>
                         <button
                             onClick={addCobro}>
                             <div className='bg-green-400 rounded-xl w-10 flex justify-center h-full items-center'>

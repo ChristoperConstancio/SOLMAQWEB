@@ -76,6 +76,24 @@ export async function fetchRFQPiezas(id) {
         console.error("Error al obtener datos de Firebase:", error);
     }
 };
+export async function fetchRFQView(id) {
+    try {
+        const db = getFirestore();
+
+        const pzRef = collection(db, "Rfq"); // Reemplaza "opciones" con el nombre de tu colección
+        const q = query(pzRef, where("Id_rfq", "==", id));
+        const querySnapshot = await getDocs(q);
+        let optionsData ;
+
+        querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            optionsData = data; // Ajusta según la estructura de tus documentos
+        });
+        return optionsData;
+    } catch (error) {
+        console.error("Error al obtener datos de Firebase:", error);
+    }
+};
 export async function fetchRFQSer(id) {
     try {
         const db = getFirestore();
@@ -184,7 +202,7 @@ export async function inactivateRFQ(id) {
     const db = getFirestore();
 
     const collectionRef = collection(db, 'Rfq');
-    console.log(id)
+
     // Realiza una consulta para buscar el documento con el atributo "nombre" igual a "Ejemplo"
     const q = query(collectionRef, where("Id_rfq", "==", id));
 
@@ -235,9 +253,29 @@ export async function editingRFQPieza(data) {
     const collectionRef = collection(db, 'Rfq_pz');
     // Realiza una consulta para buscar el documento con el atributo "nombre" igual a "Ejemplo"
     const q = query(collectionRef, where("name", "==", data.name));
+    const collectionRFQ = collection(db, 'Rfq');
 
+    // Realiza una consulta para buscar el documento con el atributo "nombre" igual a "Ejemplo"
+    const p = query(collectionRFQ, where("Id_rfq", "==", data.idRFQ));
     try {
         const querySnapshot = await getDocs(q);
+        const querySnapshotRFQ = await getDocs(p);
+        if (querySnapshotRFQ.size === 0) {
+            console.log('No se encontraron documentos con el ID proporcionado.');
+            return false;
+        } else {
+            querySnapshotRFQ.forEach(async (queryDocumentSnapshot) => {
+                const docRef = doc(collectionRFQ, queryDocumentSnapshot.id);
+                const total = parseInt(data.opp) * parseInt(data.costo);
+                console.log(total)
+                // Realiza la actualización del atributo del documento
+                const updateData = {
+                    Total: total
+                };
+                await updateDoc(docRef, updateData);
+            })
+
+        }
 
         if (querySnapshot.size === 0) {
             return false;
@@ -258,9 +296,10 @@ export async function editingRFQPieza(data) {
 
             })
             console.log("cambiado")
-            return true;
 
         }
+        return true;
+
     } catch (error) {
         return false;
     }

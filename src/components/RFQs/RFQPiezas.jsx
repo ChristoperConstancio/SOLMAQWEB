@@ -115,14 +115,14 @@ function RFQPiezas() {
     setRfqs(cleanRfq);
   }
   return (
-    <div className='h-screen bg-black overflow-y-auto  text-center mx-auto'>
+    <div className='h-screen bg-black   text-center mx-auto'>
       <h1 className='text-white text-3xl'>Agregar Pieza a RFQ  {idRFQ}</h1>
 
-      <div className='mx-20 py-10 grid grid-cols-2 gap-y-8 gap-x-8   ' id='add'>
+      <div className='mx-10 py-10 grid grid-cols-2 gap-y-8 gap-x-8   ' id='add'>
 
-        <div className='space-x-8 '>
+        <div className='flex space-x-3 '>
           <label htmlFor="" className='text-white text-3xl'>Manufacture Part No :</label>
-          <input id='manufacture' className='pl-3 rounded-lg w-72 h-10' type="text" onChange={handleInputChange} />
+          <input id='manufacture' className='pl-3 rounded-lg w-72 h-10' type="number" onChange={handleInputChange} />
         </div>
         <div className='space-x-8'>
           <label htmlFor="" className='text-white text-3xl'>Rev :</label>
@@ -136,15 +136,15 @@ function RFQPiezas() {
           <label htmlFor="" className='text-white text-3xl'>Material :</label>
           <input id='material' className='pl-3 rounded-lg w-72 h-10' type="text" onChange={handleInputChange} />
         </div>
-        <div className='space-x-8'>
+        <div className='space-x-8 items-center flex'>
           <label htmlFor="" className='text-white text-3xl'>Specification :</label>
-          <input id='specification' className='pl-3 rounded-lg w-72 h-32' type="text" onChange={handleInputChange} />
+          <textarea id='specification' className='pl-3 rounded-lg w-72 h-32 resize-y' type="text" onChange={handleInputChange} />
         </div>
         <div className='space-x-8'>
           <label htmlFor="" className='text-white text-3xl'>Opp Qty : </label>
-          <input id='opp' className='pl-3 rounded-lg w-72 h-10' type="number" onChange={handleInputChange} />
+          <input id='opp' className='pl-3 rounded-lg w-72 h-10 ' type="number" onChange={handleInputChange} />
         </div>
-        <div className='space-x-8'>
+        <div className='space-x-8 flex'>
           <label htmlFor="" className='text-white text-3xl'>Special Comments : </label>
           <input id='special' className='pl-3 rounded-lg w-72 h-10' type="text" onChange={handleInputChange} />
         </div>
@@ -171,7 +171,7 @@ function RFQPiezas() {
         </button>
 
       </div>
-      <div className='my-5 mx-auto px-10' id='view'>
+      <div className='bg-black py-5 mx-auto px-10' id='view'>
         <table className="table-auto w-full ">
           <thead>
             <tr className="bg-yellow-500 h-10 ">
@@ -209,7 +209,7 @@ function RFQPiezas() {
           </tbody>
         </table>
       </div>
-      <div className=" flex justify-center mx-44 space-x-16 mt-5">
+      <div className="bg-black flex justify-center px-44 space-x-16 pt-5">
         <button className="bg-red-500 hover:bg-red-800 rounded-xl text-white font-bold w-44 h-16"
           onClick={cancel}>
           <h1 className="text-3xl" > Cancelar </h1>

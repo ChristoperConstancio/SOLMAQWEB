@@ -43,7 +43,7 @@ function RFQPiezasEditar() {
         <div className='h-screen bg-black  '>
             <h1 className='font-bold text-white text-3xl text-center'>Editar RFQ</h1>
             <h1 className='text-white text-center'>RFQ : {rfqs.idRFQ}</h1>
-            <div className='mx-20 py-10 grid grid-cols-2 gap-y-8 gap-x-8   ' name='add'>
+            <div className='bg-black px-20 py-10 grid grid-cols-2 gap-y-8 gap-x-8   ' name='add'>
                 <div className='space-x-8 '>
                     <label htmlFor="" className='text-white text-3xl'>Manufacture Part No :</label>
                     <input name='manufacture'

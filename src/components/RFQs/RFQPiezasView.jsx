@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { fetchRFQPiezas, inactivateRFQP } from '../../customHooks/RFQ'
+import { fetchRFQPiezas, fetchRFQView, inactivateRFQP } from '../../customHooks/RFQ'
 import editClient from '../../customHooks/editClient'
 import { useNavigate } from 'react-router-dom'
 import edit from '../../assets/editing.png'
@@ -9,7 +9,7 @@ function RFQPiezasView() {
     const [rfqs, setRfqs] = useState([])
     const idRfq = localStorage.getItem('rfq')
     const razon = localStorage.getItem('razon')
-    const total = localStorage.getItem('total')
+    
     const [selectRfq, setSelectRfq] = useState()
     const navigate = useNavigate();
 
@@ -47,9 +47,10 @@ function RFQPiezasView() {
             const filterData = data.filter( item => item.state == "Activo")
             setRfqs(filterData);
             rfqInput.value = idRfq;
+            const {Total} = await fetchRFQView(idRfq)
             const razonValor = await editClient(razon);
             razonInput.value = razonValor.Razonsocial;
-            totalInput.value = total;
+            totalInput.value = Total;
         }
         fetchRfqPz()
     }, [])

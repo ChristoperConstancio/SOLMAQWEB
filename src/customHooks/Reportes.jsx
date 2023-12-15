@@ -45,6 +45,7 @@ function Reportes({ informacion, cliente }) {
                     </View>
                     <View style={tw("table border border-solid border-t-0 border-l-0 border-r border-b-0")}>
                         <Text style={tw("mx-auto mt-5 text-sm text-bold text-3xl")}>COBROS REALIZADOS</Text>
+                        <Text style={tw("mx-auto mt-5 text-sm text-black")}> Total a cobrar: ${informacion[0].total}</Text>
 
                         <View style={tw("mx-auto flex-row")}>
                             <View style={tw("w-1/5 border border-solid border-t-0 border-l-0 bg-yellow-500")}>
