@@ -24,7 +24,7 @@ export default function Clientes() {
             navigate('/ModificarCliente')
         }
     }
-    const inactivateclient = () => {
+    const inactivateclient = async() => {
 
         if (selectedRow == null) {
             alert('Elige un Cliente')
@@ -33,7 +33,7 @@ export default function Clientes() {
 
             if (validar == "NO") return false;
             if (validar == "SI") {
-                const isSuccesful = inactivateClient(selectedRow)
+                const isSuccesful = await inactivateClient(selectedRow)
                 setFilteredData((prevData) => prevData.filter(item => item.id !== selectedRow));
                 setData((prevData) => prevData.filter(item => item.id !== selectedRow));
 
@@ -75,8 +75,10 @@ export default function Clientes() {
             const listClients = await getClientes();
 
             if (Array.isArray(listClients)) {
-                listClients.map(item => {
-                    clientes.push(item);
+                listClients.filter(item => {
+                    if(item.Status === 'Activo'){
+                        clientes.push(item)
+                    }
                 })
 
                 setData(clientes)

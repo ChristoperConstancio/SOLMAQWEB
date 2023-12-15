@@ -9,6 +9,11 @@ export default function AgregarCliente() {
     const correo = document.getElementById('correo');
     const telefono = document.getElementById('telefono');
     const navigate = useNavigate();
+    const cancel = (e) => {
+        e.preventDefault();
+        alert("Operacion Cancelada");
+        navigate('/Clientes');
+    }
     const addClient = async (e) => {
         e.preventDefault();
         const db = getFirestore();
@@ -98,9 +103,11 @@ export default function AgregarCliente() {
                     </div>
                 </div>
                 <div className="my-10 flex justify-center mx-44 space-x-16">
-                    <button className="bg-red-500 rounded-xl text-white font-bold w-44 h-16">
+                    <button className="bg-red-500 rounded-xl text-white font-bold w-44 h-16"
+                            onClick={cancel}
+                            >
                         <h1 className="text-3xl" > Cancelar </h1>
-
+                            
                     </button>
                     <button
                         className="bg-amber-500 rounded-xl text-white font-bold w-44 h-16"

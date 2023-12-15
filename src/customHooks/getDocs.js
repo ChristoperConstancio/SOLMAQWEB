@@ -1,7 +1,11 @@
 import { useDebugValue } from "react";
 import { db } from "./FirebaseConfig";
 import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
+import bcrypt from 'bcryptjs'
 
+const compare = async (passwordtext, hash)=>{
+  return await bcrypt.compare(passwordtext, hash);
+}
 export const loginUser = async (usuario, pass) => {
   try {
     // Inicializa Firebase Auth y Firestore
@@ -16,12 +20,18 @@ export const loginUser = async (usuario, pass) => {
         return  { success: false, nombre: 'Usuario y/o Contraseña incorrectas' };
       }
 
-      const userData = querySnapshot.docs.map((doc) => {
+      const userData = querySnapshot.docs.map(async (doc) => {
         const { nombre, apellidoPaterno, apellidoMaterno, password, rol,status } = doc.data();
         if(status == 'Inactivo'){
         return  { success: false, nombre: 'Usuario y/o Contraseña incorrectas' };
         }
-        if (pass.value === password ) {
+        const compares = await compare(pass.value, password)
+        console.log(compares)
+        if(password == pass.value){
+          return { success: true, nombre: `${nombre} ${apellidoPaterno} ${apellidoMaterno}`, rol : rol };
+
+        }
+        if (compares ) {
           return { success: true, nombre: `${nombre} ${apellidoPaterno} ${apellidoMaterno}`, rol : rol };
         }
         return  { success: false, nombre: 'Usuario y/o Contraseña incorrectas' };

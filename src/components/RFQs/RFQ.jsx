@@ -72,7 +72,8 @@ function RFQ() {
         }
         const getCustomers = async () => {
             const customers = await getClientes();
-            setOptionsCustomer(customers)
+            const filter = customers.filter( item => item.Status === 'Activo')
+            setOptionsCustomer(filter)
         }
         const setButtons = () => {
             const tipoUsuario = localStorage.getItem('tipo');

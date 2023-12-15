@@ -5,7 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { getRol } from "../customHooks/getRol";
 import { checkUser } from "../customHooks/getDocs";
 import { addUserDoc } from "../customHooks/editingUser";
+import bcrypt from 'bcryptjs'
 export default function AgregarUsuario() {
+
     const [options, setOptions] = useState([]);
     const [selectedOption, setSelectedOption] = useState("");
     const username = document.getElementById('username');
@@ -24,11 +26,13 @@ export default function AgregarUsuario() {
         const userCheck = await checkUser(username.value);
         if (!userCheck) {
             alert("Intenta con otro Usuario")
+            
             return false;
         }
     }
     const addUser = async (e) => {
         e.preventDefault();
+
 
         const { id } = await getRol(selectedOption);
         const userCheck = await checkUser(username.value);
@@ -40,13 +44,14 @@ export default function AgregarUsuario() {
             alert('Llena todos los campos');
 
         } else {
-            console.log("aqui")
+            const hash = await bcrypt.hash(password.value, 10)
+            
             const userChecked = {
                 nombreUsuario: username.value,
                 apellidoPaterno: paterno.value,
                 apellidoMaterno: materno.value,
                 nombre: nombre.value,
-                password: password.value,
+                password: hash,
                 rol: id,
                 status: 'Activo'
             }

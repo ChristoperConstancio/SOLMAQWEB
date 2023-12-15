@@ -70,7 +70,8 @@ function Ventas() {
     useEffect(() => {
         const getCustomers = async () => {
             const customers = await getClientes();
-            setOptionsCustomer(customers)
+            const filter = customers.filter( item => item.Status === 'Activo')
+            setOptionsCustomer(filter)
         }
         const getVentas = async () => {
             const ventas = await getVentasAll();

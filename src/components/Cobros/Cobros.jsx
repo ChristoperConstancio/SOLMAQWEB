@@ -5,7 +5,7 @@ import add from '../../assets/add.png'
 import remove from '../../assets/remove.png'
 import view from '../../assets/view.png'
 import { Link, useNavigate } from 'react-router-dom';
-import { getVentasAll } from '../../customHooks/Ventas';
+import { getVentasAll, getVentasNu } from '../../customHooks/Ventas';
 function Cobros() {
 
     const [optionsCustomer, setOptionsCustomer] = useState([])
@@ -45,11 +45,16 @@ function Cobros() {
             navigate('/CobrosView');
         }
     }
-    const addCobro = () => {
+    const addCobro = async () => {
         if (selectedRow == null || selectedRow == '') {
             alert("Selecciona una venta");
             return;
         } else {
+            const check = await getVentasNu(selectedRow)
+            if(check.saldo == 0){
+                alert("Venta saldada");
+                return;
+            }
             localStorage.setItem('nuVenta', selectedRow)
             navigate('/AgregarCobro');
         }
@@ -61,7 +66,8 @@ function Cobros() {
     useEffect(() => {
         const getCustomers = async () => {
             const customers = await getClientes();
-            setOptionsCustomer(customers)
+            const filter = customers.filter( item => item.Status === 'Activo')
+            setOptionsCustomer(filter)
         }
         const getVentas = async () => {
             const ventas = await getVentasAll();

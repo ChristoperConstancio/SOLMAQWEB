@@ -26,7 +26,7 @@ function AgregarVenta() {
     state: 'Activo',
     saldo : ''
   })
-
+ 
   const toggleCheckbox = (e) => {
     setSelectedRow((prevSelectedRows) => {
       // Verifica si el ID ya está en el array
@@ -52,7 +52,7 @@ function AgregarVenta() {
     setFormData({...formData, rfqs : selectedRow})
   }
  
-  const cancel = () => {
+  const cancel = (e) => {
     e.preventDefault();
     alert("Operacion Cancelada");
     navigate('/Ventas');

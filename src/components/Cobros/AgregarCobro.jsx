@@ -37,7 +37,11 @@ function AgregarCobro() {
         const x = document.getElementById('monto').value;
         const confirmar = document.getElementById('confirmar').value;
         const saldo = document.getElementById('saldo').value;
-
+        const rastre = document.getElementById('rastreo').value;
+        if(rastre == ''){
+            alert("clave de rastreo vacia");
+            return;
+        }
         if (x !== confirmar || x == '') {
             alert("Montos no coinciden o vacios")
             return;
